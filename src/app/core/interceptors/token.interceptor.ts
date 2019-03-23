@@ -12,13 +12,14 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService) { }
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // add authorization header with jwt token if available
-    let currentUser = this.authenticationService.currentUserValue;
-    if (currentUser && currentUser.access) {
+    let currentAuthResult = this.authenticationService.getAuthResult;
+    if (currentAuthResult && currentAuthResult.access) {
         request = request.clone({
             setHeaders: {
-                Authorization: `Bearer ${currentUser.access}`
+                Authorization: `Bearer ${currentAuthResult.access}`
             }
         });
     }

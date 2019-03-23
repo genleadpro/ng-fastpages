@@ -6,7 +6,7 @@ import env from './.env';
 export const environment = {
   production: false,
   version: env.npm_package_version + '-dev',
-  serverUrl: 'http://fastpages.code:8000/api/v1/api',
+  serverUrl: 'http://fastpages.code:8000/api/v1',
   envName: 'DEV',
   authEndpoint: 'http://fastpages.code:8000/api/auth',
   apiEndpoint: 'http://fastpages.code:8000/api/v1'
