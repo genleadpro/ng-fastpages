@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { environment } from '@env/environment';
+import { UserService } from '@app/core/services/user.service';
 
 @Component({
     selector: 'app-nav',
@@ -17,11 +18,10 @@ export class NavComponent implements OnInit {
     { link: '/contact', title: 'Contact' }
   ];
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
 
   }
-
 
 }

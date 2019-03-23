@@ -6,15 +6,15 @@ import { HomeComponent } from './pages/home.component';
 import { HomeRoutingModule } from './home.routing';
 
 import { SharedModule } from '@app/shared';
-import { ProjectItemComponent } from './pages/project-item/project-item.component';
-import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
+import { PageItemComponent } from './pages/page-item/page-item.component';
+import { PageDetailsComponent } from './pages/page-details/page-details.component';
 
 @NgModule({
     declarations: [
         HomeComponent,
         MyModalComponent,
-        ProjectItemComponent,
-        ProjectDetailsComponent
+        PageItemComponent,
+        PageDetailsComponent
     ],
     imports: [
         SharedModule,

@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ProjectService, Project } from '@app/core';
+import { PageService, Page } from '@app/core';
 import { Observable } from 'rxjs';
-
-import { MyModalComponent } from '../modals/my-modal.component';
 
 @Component({
     selector: 'app-home',
@@ -13,27 +9,18 @@ import { MyModalComponent } from '../modals/my-modal.component';
 })
 export class HomeComponent implements OnInit {
 
-    projects$: Observable<Project[]>;
+    pages$: Observable<Page[]>;
 
     constructor(
-        private modalService: NgbModal,
-        private projectService: ProjectService
+        private pageService: PageService
     ) { }
 
     ngOnInit(): void {
-        this.loadProjects();
+        // this.loadPages();
     }
 
-    loadProjects() {
-        this.projects$ = this.projectService.getAll();
-    }
-
-    openMyModal() {
-        const modalRef = this.modalService.open(MyModalComponent);
-        modalRef.componentInstance.id = 1;
-        modalRef.result.then((result) => {
-            console.log(result);
-        });
+    loadPages() {
+        this.pages$ = this.pageService.getAll();
     }
 
 }

@@ -1,7 +1,3 @@
-<div class="alert alert-info" role="alert">
-  Username: Mathis \\
-  Password: 12345
-</div>
 
 <div [hidden]="!error" class="alert alert-danger">
   {{ error }}
@@ -10,16 +6,16 @@
 <fieldset [disabled]="isLoading">
   <form (ngSubmit)="login()" [formGroup]="loginForm">
       <div class="form-group">
-        <label class="d-block">
-          <input type="text" class="form-control" [placeholder]="'Username'" formControlName="username">
-          <app-control-messages [control]="f['username']"></app-control-messages>
-        </label>
+        <input type="text" formControlName="email" required class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors.required">Username is required</div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="d-block">
-          <input type="password" class="form-control" [placeholder]="'Password'" formControlName="password">
-          <app-control-messages [control]="f['password']"></app-control-messages>
-        </label>
+        <input type="password" formControlName="password" required class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block btn-raised" type="submit" [disabled]="loginForm.invalid">
@@ -32,3 +28,5 @@
       <a [routerLink]="['/auth/register']">Don't have an account? Sign up here!</a>
   </form>
 </fieldset>
+{{ loginForm.value | json }}
+{{ loginForm.status | json }}

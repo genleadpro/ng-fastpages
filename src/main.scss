@@ -12,7 +12,7 @@
 
 // import custom component themes here
 @import 'styles-reset.scss-theme';
-@import 'app/modules/home/pages/project-item/project-container.component.scss-theme.scss';
+@import 'app/modules/home/pages/page-item/page-container.component.scss-theme.scss';
 
 @mixin custom-components-theme($theme) {
   @include my-styles-reset-theme($theme);
@@ -27,4 +27,10 @@
 .my-dark-theme {
   @include angular-material-theme($my-black-theme);
   @include custom-components-theme($my-black-theme);
+}
+
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
 }

@@ -23,7 +23,7 @@
       "dom"
     ],
     "paths": {
-      "@app/*": ["app/*"],
+      "@app/*": ["app/*"],          // avoid relative path, it means src/app aliased as @app
       "@env/*": ["environments/*"]
     }
   }

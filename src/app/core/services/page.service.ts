@@ -3,29 +3,29 @@ import { Injectable } from '@angular/core';
 import { JsonApiService } from './json-api.service';
 import { Observable } from 'rxjs';
 
-import { Project } from '../models/project.model';
+import { Page } from '../models/page.model';
 import { ApiService } from './api.service';
 
 const routes = {
-    projects: '/projects',
-    project: (id: number) =>  `/projects/${id}`
+    pages: '/pages',
+    page: (id: number) =>  `/pages/${id}`
 };
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectService {
+export class PageService {
 
     constructor(
       private jsonApiService: JsonApiService,
       private apiService: ApiService) {}
 
-    getAll(): Observable<Project[]> {
-        return this.apiService.get(routes.projects);
+    getAll(): Observable<Page[]> {
+        return this.apiService.get(routes.pages);
     }
 
-    getSingle(id: number): Observable<Project> {
-        return this.apiService.get(routes.project(id));
+    getSingle(id: number): Observable<Page> {
+        return this.apiService.get(routes.page(id));
     }
 
 }

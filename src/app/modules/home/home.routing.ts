@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProjectResolver } from './project-resolver.service';
+import { PageResolver } from './page-resolver.service';
 import { HomeComponent } from './pages/home.component';
-import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
+import { PageDetailsComponent } from './pages/page-details/page-details.component';
 
 export const routes: Routes = [
     {
@@ -13,10 +13,10 @@ export const routes: Routes = [
           component: HomeComponent
         },
         {
-          path: 'projects/:id',
-          component: ProjectDetailsComponent,
+          path: 'pages/:id',
+          component: PageDetailsComponent,
           resolve: {
-            project: ProjectResolver
+            page: PageResolver
           }
         }
       ]

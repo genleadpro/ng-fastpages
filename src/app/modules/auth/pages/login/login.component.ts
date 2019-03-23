@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { tap, delay, finalize, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-
-import { AuthService } from '@app/core';
+import { tap, delay, finalize, catchError, subscribeOn } from 'rxjs/operators';
+import { of, from } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { AuthenticationService } from '@app/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -12,42 +13,62 @@ import { AuthService } from '@app/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  loginForm: FormGroup;
   error: string;
   isLoading: boolean;
-  loginForm: FormGroup;
+  submitted = false;
+  returnUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthenticationService
   ) {
-    this.buildForm();
+
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.buildForm();
+
+    // reset login status
+    this.authService.logout();
+
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/home';
+  };
+
 
   get f () {
     return this.loginForm.controls;
   }
 
+  // OnSubmit event
   login() {
     this.isLoading = true;
 
-    const credentials = this.loginForm.value;
+    this.authService.login(this.f.email.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate([this.returnUrl]);
+      },
+      error => {
+        this.error = error;
+        if (error instanceof HttpErrorResponse) {
+          const errorMessages = new Array<{ propName: string; errors: string }>();
 
-    this.authService.login(credentials)
-      .pipe(
-        delay(5000),
-        tap(user => this.router.navigate(['/dashboard/home'])),
-        finalize(() => this.isLoading = false),
-        catchError(error => of(this.error = error))
-      ).subscribe();
+          if (error.status === 400) {
+            // TODO: extract errors here and match onto the form
+          }
+        }
+        this.isLoading = false;
+      });
   }
 
   private buildForm(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
