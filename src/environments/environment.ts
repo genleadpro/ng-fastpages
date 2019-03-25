@@ -9,7 +9,8 @@ export const environment = {
   serverUrl: 'http://fastpages.code:8000/api/v1',
   envName: 'DEV',
   authEndpoint: 'http://fastpages.code:8000/api/auth',
-  apiEndpoint: 'http://fastpages.code:8000/api/v1'
+  apiEndpoint: 'http://fastpages.code:8000/api/v1',
+  whiteLists: ["fastpages.code:8000", "fastpages.code"]
 };
 
 /*

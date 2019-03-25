@@ -11,7 +11,7 @@ export class IMyLoginContext {
   password: string;
   token: string;
 }
-const AuthResponseItem: string = 'cuurentUser';
+const AuthResponseItem: string = 'authResult';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -34,22 +34,28 @@ export class AuthenticationService {
           response => {
             // login successful if there's a jwt access token in the response
             if (response && response.access) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem(AuthResponseItem, JSON.stringify(response));
-            this.authResultSubject.next(response); //set value
-          }
+              // store user details and jwt token in local storage to keep user logged in between page refreshes
+              localStorage.setItem(AuthResponseItem, JSON.stringify(response));
+              this.authResultSubject.next(response); //set value
 
-        return response;
-      }));
+              let jwtHelper = new JwtHelperService();
+              let expiredAt = jwtHelper.getTokenExpirationDate(response.access);
+              console.log(expiredAt);
+              console.log(jwtHelper.decodeToken(response.access));
+            }
+
+          return response;
+        }
+      ));
   }
 
-  logout() {
+  public logout() {
     // remove user from local storage to log user out
     localStorage.removeItem(AuthResponseItem);
     this.authResultSubject.next(null);
   }
 
-  refreshToken() : Observable<IAuthResult> {
+  public renewToken() : Observable<IAuthResult> {
     let authResponse = JSON.parse(localStorage.getItem(AuthResponseItem));
     let token = authResponse.refresh; // refresh is refreshToken
 
@@ -66,7 +72,7 @@ export class AuthenticationService {
     );
   }
 
-  getAuthToken() : string {
+  get accessToken() : string {
     let authResponse = JSON.parse(localStorage.getItem(AuthResponseItem));
 
     if(authResponse != null) {
@@ -76,9 +82,19 @@ export class AuthenticationService {
     return '';
   }
 
+  get refreshToken() : string {
+    let authResponse = JSON.parse(localStorage.getItem(AuthResponseItem));
+
+    if(authResponse != null) {
+      return authResponse.refresh; // JWT access token
+    }
+
+    return '';
+  }
+
   isAuthenticated() : boolean {
     const jwtHelper = new JwtHelperService();
-    const token = this.getAuthToken();
+    const token = this.accessToken;
     // Check whether the token is expired and return
     // true or false
     return !jwtHelper.isTokenExpired(token);

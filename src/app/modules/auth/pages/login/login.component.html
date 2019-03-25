@@ -4,7 +4,7 @@
 </div>
 
 <fieldset [disabled]="isLoading">
-  <form (ngSubmit)="login()" [formGroup]="loginForm">
+  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
       <div class="form-group">
         <input type="text" formControlName="email" required class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">

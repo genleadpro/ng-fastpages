@@ -7,7 +7,7 @@ import {Component, OnInit} from '@angular/core';
 })
 
 export class AppComponent implements OnInit {
-  title = 'ng-fastpages';
+  APP_TITLE = 'ng-fastpages';
 
   constructor() { }
 

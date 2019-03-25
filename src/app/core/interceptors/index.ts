@@ -1,1 +1,1 @@
-export * from './token.interceptor';
+export * from './refresh-token.interceptor';

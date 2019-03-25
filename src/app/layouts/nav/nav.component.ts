@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { environment } from '@env/environment';
 import { UserService } from '@app/core/services/user.service';
-import { AuthenticationService} from '@app/core/services/authentication.service';
+import { AuthorizationService} from '@app/core/services/authorization.service';
 import { User } from '@app/core/models/user.model';
 
 @Component({
@@ -12,23 +12,29 @@ import { User } from '@app/core/models/user.model';
 })
 export class NavComponent implements OnInit {
   version = environment.version;
-  user : User;
+  user$ : User;
   navItems = [
     { link: '/dashboard/home', title: 'Home' },
     { link: '/about', title: 'About' },
     { link: '/contact', title: 'Contact' }
   ];
 
-  constructor(private userService: UserService, private auth: AuthenticationService) { }
+  constructor(private userService: UserService, private auth: AuthorizationService) { }
 
   ngOnInit() {
-    if (this.auth.isAuthenticated()) {
-      this.userService.me().subscribe(data=> {
-        this.user = data;
+    if (this.auth.isAuthenticated() && !this.user$) {
+      this.userService.me().subscribe((data: User)=> {
+        this.user$ = data;
         console.log(data);
       })
     }
 
   }
+
+  logout() {
+    this.auth.logout();
+
+  }
+
 
 }

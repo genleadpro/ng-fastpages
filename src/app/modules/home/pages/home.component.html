@@ -1,3 +1,29 @@
 <div id="content">
-    <h2>Pages</h2>
+    <h3>Pages</h3>
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>#Viewed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let page of pages">
+            <td>{{page.id}}</td>
+            <td>{{page.name}}</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    <button type="button" (click)="getMe()">Get Me</button>
+    <div *ngIf="user">
+      {{ user.first_name }} {{ user.last_name}}
+    </div>
+    <button type="button" (click)="incrementCount()">Clck Me!!</button>
+    <div>
+      You have clicked {{ count }} times.
+    </div>
 </div>
