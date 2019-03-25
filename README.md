@@ -4,7 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Add my.fastpages.code to local DNS e.g. hosts file on Windows
+Add my.fastpages.code to local DNS e.g. hosts file on Windows.
+
 Run `ng serve --host my.fastpages.code --port 4200 --disable-host-check` for a dev server. Navigate to `http://my.fastpages.code/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
