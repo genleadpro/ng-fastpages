@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthorizationService } from '@app/core/services/authorization.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ValidationService } from './../../../../shared/services/validation.service';
 
 @Component({
   selector: 'app-login',
@@ -53,17 +55,23 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          // console.log('successfull login, then return to ', this.returnUrl);
           this.router.navigate([this.returnUrl]);
       },
       error => {
-        this.error = error;
+        if (error instanceof HttpErrorResponse && error.status == 400) {
+          if ("non_field_errors" in error.error) {
+            let allErrors = error.error['non_field_errors'];
+            this.error = allErrors[0];
+          }
+        }
         this.isLoading = false;
       });
   }
 
   private buildForm(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }

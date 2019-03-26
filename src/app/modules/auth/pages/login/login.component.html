@@ -6,13 +6,14 @@
 <fieldset [disabled]="isLoading">
   <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
       <div class="form-group">
-        <input type="text" formControlName="email" required class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-          <div *ngIf="f.email.errors.required">Username is required</div>
-        </div>
+        <label for="email">Email</label>
+        <input type="text" formControlName="email" required class="form-control" [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors }"/>
+        <app-control-messages [control]="f.email" [labelName]="Email"></app-control-messages>
       </div>
       <div class="form-group">
-        <input type="password" formControlName="password" required class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <label>Password</label>
+        <input type="password" formControlName="password" required class="form-control" [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors }" />
+        <app-control-messages [control]="f.password"></app-control-messages>
         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
           <div *ngIf="f.password.errors.required">Password is required</div>
         </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { LoginResponse } from '@app/core/models/loginresponse.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -69,6 +69,12 @@ export class AuthorizationService {
     // TODO: Only for authentication error codes
     this.setAccessToken(null);
     this.setRefreshToken(null);
+    if (err.status == 400) {
+      if ("non_field_errors" in err.error) {
+        console.log(err.error['non_field_errors']);
+        return throwError(err.error['non_field_errors']);
+      }
+    }
   }
 
   private setAccessToken (accessToken: string) {

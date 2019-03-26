@@ -4,7 +4,6 @@ import { MyModalComponent } from './modals/my-modal.component';
 
 import { HomeComponent } from './pages/home.component';
 import { HomeRoutingModule } from './home.routing';
-
 import { SharedModule } from '@app/shared';
 import { PageItemComponent } from './pages/page-item/page-item.component';
 import { PageDetailsComponent } from './pages/page-details/page-details.component';

@@ -8,6 +8,7 @@ import { ValidationService } from '../../services/validation.service';
   styleUrls: ['./control-messages.component.scss']
 })
 export class ControlMessagesComponent {
+
   @Input()
   public control: FormControl;
   @Input()

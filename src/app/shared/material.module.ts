@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -24,6 +25,8 @@ import { MatNativeDateModule } from '@angular/material';
 @NgModule({
   declarations: [],
   imports: [
+    FlexLayoutModule,
+    MatSidenavModule,
     MatButtonModule,
     MatToolbarModule,
     MatMenuModule,
