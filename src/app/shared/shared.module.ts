@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from './material.module';
-
+import { ThemePickerModule } from './theme-picker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxMasonryModule } from 'ngx-masonry';
@@ -70,13 +70,13 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule,
-
-        NgbModule.forRoot(),
-        FontAwesomeModule
+      ThemePickerModule,
+      CommonModule,
+      FormsModule,
+      ReactiveFormsModule,
+      RouterModule,
+      NgbModule.forRoot(),
+      FontAwesomeModule
     ],
     declarations: [
       ControlMessagesComponent,

@@ -1,9 +1,19 @@
 <div [class]="theme">
   <div class="mat-app-background">
-    <app-nav></app-nav>
-      <div class="container">
-        <router-outlet></router-outlet>
+    <div class="container">
+      <div style="height: 100vh;">
+        <mat-sidenav-container>
+          <mat-sidenav>
+          </mat-sidenav>
+          <mat-sidenav-content>
+            <app-nav></app-nav>
+            <main class="content">
+              <router-outlet></router-outlet>
+            </main>
+          </mat-sidenav-content>
+        </mat-sidenav-container>
       </div>
+    </div>
     <app-footer (changeTheme)="onThemeChange($event)"></app-footer>
   </div>
 </div>

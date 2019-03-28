@@ -4,6 +4,7 @@ import { environment } from '@env/environment';
 import { UserService } from '@app/core/services/user.service';
 import { AuthorizationService} from '@app/core/services/authorization.service';
 import { User } from '@app/core/models/user.model';
+import { ThemePicker } from './../../shared/theme-picker/theme-picker';
 
 @Component({
     selector: 'app-nav',
