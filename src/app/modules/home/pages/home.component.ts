@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PageService, Page } from '@app/core';
-import { UserService } from '@app/core/services/user.service';
+import { DataSource} from '@angular/cdk/collections';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { PageService, PageModel } from '@app/core';
+import { UserService } from '@app/core/services/user.service';
 import { User } from '@app/core/models/user.model';
+
 
 @Component({
     selector: 'app-home',
@@ -10,18 +13,21 @@ import { User } from '@app/core/models/user.model';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  pages$: Observable<Page[]>;
+  dataSource = new PageDataSource(this.pageService);
+  displayedColumns = ['name', 'slug', 'status', 'actions'];
+  pages$: Observable<PageModel[]>;
   user : User;
   count : number = 0;
 
   constructor(
-        private pageService: PageService,
-        private userService: UserService
-    ) { }
+    private router: Router,
+    private route: ActivatedRoute,
+    private pageService: PageService,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
-
+    this.loadPages();
   }
 
   loadPages() {
@@ -40,4 +46,27 @@ export class HomeComponent implements OnInit {
     this.count += 1;
   }
 
+  onRowClicked(row) {
+    console.log('Row clicked: ', row);
+  }
+
+  onEditClicked(id: number) {
+    this.router.navigate(['../pages/' + id + '/edit'], { relativeTo: this.route });
+    console.log('Row edit clicked: ', id);
+  }
+
+  onDeleteClicked(id: number) {
+
+    console.log('Row delete clicked: ', id);
+  }
+}
+
+export class PageDataSource extends DataSource<any> {
+  constructor(private pageService: PageService) {
+    super();
+  }
+  connect(): Observable<PageModel[]> {
+    return this.pageService.getAll();
+  }
+  disconnect() {}
 }

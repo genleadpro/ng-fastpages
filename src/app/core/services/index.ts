@@ -3,4 +3,5 @@ export * from './page.service';
 export * from './api.service';
 export * from './theme.service';
 export * from './authorization.service';
+export * from './user.service';
 

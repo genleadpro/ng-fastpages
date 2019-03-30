@@ -6,11 +6,11 @@ export const CONTENT_ROUTES: Routes = [
     loadChildren: './modules/home/home.module#HomeModule'
   },
   {
+    path: 'settings',
+    loadChildren: './modules/setting/setting.module#SettingModule'
+  },
+  {
     path: 'about',
     loadChildren: './modules/about/about.module#AboutModule'
   },
-  {
-    path: 'contact',
-    loadChildren: './modules/contact/contact.module#ContactModule'
-  }
 ];

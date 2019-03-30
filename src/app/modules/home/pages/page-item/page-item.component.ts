@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Page } from '@app/core';
+import { PageModel } from '@app/core';
 
 @Component({
   selector: 'app-page-item',
@@ -8,7 +8,7 @@ import { Page } from '@app/core';
   styleUrls: ['./page-item.component.scss'],
 })
 export class PageItemComponent implements OnInit {
-  @Input() page: Page;
+  @Input() page: PageModel;
 
   constructor() { }
 

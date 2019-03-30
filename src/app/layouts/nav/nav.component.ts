@@ -17,7 +17,7 @@ export class NavComponent implements OnInit {
   navItems = [
     { link: '/dashboard/home', title: 'Home' },
     { link: '/about', title: 'About' },
-    { link: '/contact', title: 'Contact' }
+    { link: '/settings', title: 'Settings' }
   ];
 
   constructor(private userService: UserService, private auth: AuthorizationService) { }
@@ -36,6 +36,4 @@ export class NavComponent implements OnInit {
     this.auth.logout();
 
   }
-
-
 }

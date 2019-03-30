@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { OnInit } from '@angular/core';
 
 import { JsonApiService } from './json-api.service';
 import { ApiService } from './api.service';
@@ -14,12 +15,16 @@ const routes = {
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnInit {
 
   private _loggedInUser: User;
   constructor(
     private jsonApiService: JsonApiService,
     private apiService: ApiService) {}
+
+  ngOnInit(): void {
+  }
+
 
   me() : Observable<any> {
       return this.apiService.get(routes['me']);
@@ -32,7 +37,4 @@ export class UserService {
   getById(id: number) {
 
   }
-
-
-
 }

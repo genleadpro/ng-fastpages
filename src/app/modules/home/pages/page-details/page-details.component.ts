@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Page } from '@app/core';
+import { PageModel } from '@app/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./page-details.component.scss']
 })
 export class PageDetailsComponent implements OnInit {
-  page$: Observable<Page>;
+  page$: Observable<PageModel>;
 
   constructor(
     private route: ActivatedRoute

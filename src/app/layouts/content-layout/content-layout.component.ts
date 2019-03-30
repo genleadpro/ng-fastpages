@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from '@app/core';
 import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
+import { AuthorizationService } from '@app/core/services/authorization.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-content-layout',
@@ -13,7 +17,10 @@ export class ContentLayoutComponent implements OnInit {
   theme = 'my-light-theme';
   isDarkTheme: Observable<boolean>;
 
-  constructor(private themeService: ThemeService) {}
+  constructor(private themeService: ThemeService,
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
+    private auth: AuthorizationService) {}
 
   ngOnInit() {
     this.isDarkTheme = this.themeService.isDarkTheme;
@@ -21,6 +28,16 @@ export class ContentLayoutComponent implements OnInit {
     if (this.overlayContainer) {
       this.overlayContainer.getContainerElement().classList.add(this.theme);
     }
+  }
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches)
+  );
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/auth/login']);
   }
 
   onThemeChange(theme: boolean) {
@@ -38,3 +55,4 @@ export class ContentLayoutComponent implements OnInit {
   }
 
 }
+

@@ -3,12 +3,12 @@ import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@a
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Page, PageService } from '@app/core';
+import { PageModel, PageService } from '@app/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PageResolver implements Resolve<Page> {
+export class PageResolver implements Resolve<PageModel> {
   constructor(
     private pageService: PageService,
     private router: Router
