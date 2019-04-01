@@ -20,6 +20,9 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
               return this.jwtInterceptor.intercept(req, next);
             }));
           }
+          if (errorResponse.status === 400) {
+            return throwError({ error: 'token expired'});
+          }
           return throwError(err);
         }));
     } else {

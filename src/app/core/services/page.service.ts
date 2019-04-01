@@ -10,7 +10,8 @@ const routes = {
   pages: '/pages/',
   page: (id: number) => `/pages/${id}/`,
   add: '/pages/',
-  edit: (id: number) => `/pages/${id}/edit/`,
+  update: (id: number) => `/pages/${id}/`,
+  delete: (id: number) => `/pages/${id}/`
 };
 
 @Injectable({
@@ -32,6 +33,14 @@ export class PageService {
 
     addPage(page: PageModel) {
       return this.apiService.post(routes.add, page);
+    }
+
+    updatePage(id: number, page: PageModel) {
+      return this.apiService.put(routes.update(id), page);
+    }
+
+    deletePage(id: number) {
+      return this.apiService.delete(routes.delete(id));
     }
 
 }

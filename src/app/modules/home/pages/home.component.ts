@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DataSource} from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private pageService: PageService,
-    private userService: UserService
+    private chageDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -34,20 +34,8 @@ export class HomeComponent implements OnInit {
     this.pages$ = this.pageService.getAll();
   }
 
-  getMe() {
-    console.log('Get me button clicked');
-    this.userService.me().subscribe((data: User)=> {
-      this.user = data;
-      console.log(data);
-    });
-  }
-
-  incrementCount() {
-    this.count += 1;
-  }
-
-  onRowClicked(row) {
-    console.log('Row clicked: ', row);
+  onAddClicked() {
+    this.router.navigate(['../pages/add'], { relativeTo: this.route });
   }
 
   onEditClicked(id: number) {
@@ -56,9 +44,18 @@ export class HomeComponent implements OnInit {
   }
 
   onDeleteClicked(id: number) {
-
     console.log('Row delete clicked: ', id);
+    this.pageService.deletePage(id).subscribe(data => {
+      this.dataSource.disconnect();
+      this.dataSource.connect();
+    });
+
   }
+
+  refresh() {
+    this.chageDetector.detectChanges();
+  }
+
 }
 
 export class PageDataSource extends DataSource<any> {

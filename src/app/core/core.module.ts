@@ -30,7 +30,7 @@ function jwtOptionsFactory (authorizationService: AuthorizationService) {
       JwtModule.forRoot({
         config: {
           throwNoTokenError: true,
-          whitelistedDomains: environment.whiteLists,
+          whitelistedDomains: [ /^null$/ ], // work around to by pass its bugs //environment.whiteLists,
           authScheme: 'Bearer ',
           skipWhenExpired: false
         },

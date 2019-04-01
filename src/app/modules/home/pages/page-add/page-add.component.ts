@@ -60,6 +60,7 @@ export class PageAddComponent implements OnInit {
         this.isLoading = false;
       });
   }
+
   buildForm() {
     this.pageForm = this.formBuilder.group({
       id: [],
@@ -67,6 +68,10 @@ export class PageAddComponent implements OnInit {
       slug: ['', []],
       status: [true, [Validators.required]]
     });
+  }
+
+  onCancelClicked() {
+    this.router.navigate(['../../home'], {relativeTo: this.route});
   }
 }
 
