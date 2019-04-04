@@ -12,7 +12,8 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
 
   /**
    * we not verify if access token expired or not, just wait for error response
-   * If error.code === 'token_not_valid', then access token expired. Inititate refresh token first
+   * If error.code === 'token_not_valid', then access token expired. Inititate refresh token first.
+   * If successfully got new access token, intercept the original request.
    * **/
   intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log("Intercept request");
