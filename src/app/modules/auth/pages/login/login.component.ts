@@ -6,6 +6,7 @@ import { AuthorizationService } from '@app/core/services/authorization.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ValidationService } from '@app/shared/services/validation.service';
 import { UserService } from '@app/core/services/user.service';
+import { environment } from '@env/environment.prod';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   isLoading: boolean;
   submitted = false;
   returnUrl: string;
-
+  appTitle: string = environment.appTitle;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -58,6 +59,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           // console.log('successfull login, then return to ', this.returnUrl);
+
           this.router.navigate([this.returnUrl]);
       },
       error => {
@@ -69,6 +71,10 @@ export class LoginComponent implements OnInit {
         }
         this.isLoading = false;
       });
+  }
+
+  private getCurrentUser() {
+
   }
 
   private buildForm(): void {

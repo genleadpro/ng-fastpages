@@ -1,31 +1,77 @@
-<div class="col-md-12">
-    <h2 class="text-center">Add Page</h2>
-    <form [formGroup]="pageForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label>Title:</label>
-        <input type="text" formControlName="title" placeholder="Title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
-        <div *ngIf="submitted && f.title.errors">
-          <div *ngIf="f.title.errors.required">Title is required</div>
-        </div>
-      </div>
+<form [formGroup]="pageForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-header>
+      <h2 class="text-center">Add Page</h2>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-grid-list #grid cols="3" rowHeight="2:1">
+          <mat-grid-tile>
+            <mat-form-field>
+              <label>Title</label>
+              <input matInput formControlName="title" placeholder="Title" required/>
+              <app-control-messages [control]="f.title"></app-control-messages>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field>
+              <label>Slug</label>
+              <input matInput formControlName="slug" placeholder="Slug" />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field>
+            <label>Status:</label>
+              <mat-select formControlName="status" required>
+                <mat-option>-- None --</mat-option>
+                <mat-option value="0">Not Active</mat-option>
+                <mat-option value="1">Active</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      <mat-tab-group>
+        <mat-tab label="First">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <mat-card class="example-card">
+                <mat-card-header>
 
-      <div class="form-group">
-        <label>Slug:</label>
-        <input type="text" formControlName="slug" placeholder="Slug" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.slug.errors }">
-        <div *ngIf="submitted && f.slug.errors">
-          <div *ngIf="f.slug.errors.required">Slug is required</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Status:</label>
-        <input type="text" formControlName="status" placeholder="Status" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
-        <div *ngIf="submitted && f.status.errors">
-          <div *ngIf="f.status.errors.required">Status is required</div>
-        </div>
-      </div>
-
-      <button type="submit" class="btn btn-info">Save</button>
-      <button type="button" (click)="onCancelClicked()" class="btn btn-cancel">Cancel</button>
-    </form>
-  </div>
+                </mat-card-header>
+                <mat-card-actions>
+                  <ngx-mat-file-input #prodImg1 formControlName="product_image1" placeholder="Product Image 1"></ngx-mat-file-input>
+                    <button mat-icon-button matSuffix *ngIf="!prodImg1.empty" (click)="prodImg1.clear($event)">
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+            <mat-card class="example-card">
+              <mat-card-header>
+              </mat-card-header>
+              <img mat-card-image src="{{ product_image2_url }}" alt="Product Image #2">
+              <mat-card-actions>
+              </mat-card-actions>
+            </mat-card>
+            <mat-card class="example-card">
+              <mat-card-header>
+              </mat-card-header>
+              <img mat-card-image src="{{ product_image3_url }}" alt="Product Image #3">
+              <mat-card-actions>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </mat-tab>
+        <mat-tab label="Second"> Content 2 </mat-tab>
+        <mat-tab label="Third"> Content 3 </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button type="submit" color="Primary">
+        <mat-icon class="nav-icon">save</mat-icon>
+        Save
+      </button>
+      <button mat-button type="button" (click)="onCancelClicked()">
+        <mat-icon class="nav-icon">cancel</mat-icon>
+        Cancel
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

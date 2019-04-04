@@ -1,6 +1,9 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
@@ -21,16 +24,32 @@ function jwtOptionsFactory (authorizationService: AuthorizationService) {
   };
 }
 
+export const createTranslateLoader = (http: HttpClient) => {
+  /* for development
+  return new TranslateHttpLoader(
+      http,
+      '/start-javascript/sb-admin-material/master/dist/assets/i18n/',
+      '.json'
+  );*/
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+};
+
 @NgModule({
-    imports: [
-  CommonModule,
+  imports: [
+      CommonModule,
       HttpClientModule,
       NgxSpinnerModule,
-
+      TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: createTranslateLoader,
+            deps: [HttpClient]
+        }
+      }),
       JwtModule.forRoot({
         config: {
           throwNoTokenError: true,
-          whitelistedDomains: [ /^null$/ ], // work around to by pass its bugs //environment.whiteLists,
+          whitelistedDomains: [] ,
           authScheme: 'Bearer ',
           skipWhenExpired: false
         },
@@ -55,7 +74,12 @@ function jwtOptionsFactory (authorizationService: AuthorizationService) {
           provide: HTTP_INTERCEPTORS,
           useClass: RefreshTokenInterceptor,
           multi: true
-        }
+        }/*,
+        {
+          provide: PLATFORM_PIPES,
+          useValue: TranslatePipe,
+          multi: true
+        }*/
     ]
 })
 export class CoreModule {

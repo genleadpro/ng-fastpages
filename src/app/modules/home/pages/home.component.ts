@@ -1,10 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { DataSource} from '@angular/cdk/collections';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { PageService, PageModel } from '@app/core';
-import { UserService } from '@app/core/services/user.service';
-import { User } from '@app/core/models/user.model';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 
 @Component({
@@ -13,11 +12,12 @@ import { User } from '@app/core/models/user.model';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  dataSource = new PageDataSource(this.pageService);
+  pages$: Observable<PageModel>;
+  dataSource: MatTableDataSource<PageModel>; //new PageDataSource(this.pageService);
+  @ViewChild(MatPaginator)  paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   displayedColumns = ['name', 'slug', 'status', 'actions'];
-  pages$: Observable<PageModel[]>;
-  user : User;
-  count : number = 0;
 
   constructor(
     private router: Router,
@@ -30,8 +30,27 @@ export class HomeComponent implements OnInit {
     this.loadPages();
   }
 
+   /**
+   * Set the paginator and sort after the view init since this component will
+   * be able to query its view for the initialized paginator and sort.
+   */
+  ngAfterViewInit() {
+
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
   loadPages() {
-    this.pages$ = this.pageService.getAll();
+    this.pageService.getAll().subscribe(data => {
+      this.dataSource =  new MatTableDataSource();
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.data = data;
+    });
   }
 
   onAddClicked() {
@@ -46,8 +65,7 @@ export class HomeComponent implements OnInit {
   onDeleteClicked(id: number) {
     console.log('Row delete clicked: ', id);
     this.pageService.deletePage(id).subscribe(data => {
-      this.dataSource.disconnect();
-      this.dataSource.connect();
+
     });
 
   }
@@ -57,7 +75,7 @@ export class HomeComponent implements OnInit {
   }
 
 }
-
+/*
 export class PageDataSource extends DataSource<any> {
   constructor(private pageService: PageService) {
     super();
@@ -67,3 +85,4 @@ export class PageDataSource extends DataSource<any> {
   }
   disconnect() {}
 }
+*/

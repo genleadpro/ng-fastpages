@@ -1,33 +1,49 @@
+<div class="login-page">
+  <div class="content">
+      <!-- <h1 class="app-name">Sb Admin Material</h1> -->
+      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="login-form" fxFlex  >
+          <div class="text-center">
+              <h2 class="app-name"> {{ appTitle }}</h2>
+          </div>
+          <div [hidden]="!error" class="alert alert-danger">
+              {{ error }}
+            </div>
 
-<div [hidden]="!error" class="alert alert-danger">
-  {{ error }}
+          <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
+              <div fxFlexFill>
+                  <mat-form-field class="w-100">
+                      <input matInput formControlName="email" placeholder="Email">
+                  </mat-form-field>
+                  <app-control-messages [control]="f.email" [labelName]="Email"></app-control-messages>
+              </div>
+          </div>
+          <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+              <div fxFlexFill>
+                  <mat-form-field class="w-100">
+                      <input matInput formControlName="password" type="password" placeholder="Password">
+                  </mat-form-field>
+                  <app-control-messages [control]="f.password" [labelName]="Password"></app-control-messages>
+              </div>
+          </div>
+          <div fxFlex  fxLayout="row" fxLayout.lt-md="column" style="margin: 20px 0 30px 0">
+              <div fxFlex>
+                  <mat-checkbox color="primary">Remember Me</mat-checkbox>
+              </div>
+              <div fxFlex  fxLayoutAlign="end">
+                  <a href="javascript:void(0)">Forget Password</a>
+              </div>
+          </div>
+          <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+              <div fxFlexFill>
+                  <button type="submit" mat-raised-button color="primary" class="w-100">
+                      <span [hidden]="isLoading">Login</span>
+                      <span [hidden]="!isLoading">
+                        <fa-icon icon="asterisk" size="3x" [spin]="true"></fa-icon>
+                      </span>
+                  </button>
+              </div>
+          </div>
+
+      </form>
+  </div>
 </div>
-
-<fieldset [disabled]="isLoading">
-  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="text" formControlName="email" required class="form-control" [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors }"/>
-        <app-control-messages [control]="f.email" [labelName]="Email"></app-control-messages>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" formControlName="password" required class="form-control" [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors }" />
-        <app-control-messages [control]="f.password"></app-control-messages>
-        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-          <div *ngIf="f.password.errors.required">Password is required</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block btn-raised" type="submit" [disabled]="loginForm.invalid">
-          <span [hidden]="isLoading">Submit</span>
-          <span [hidden]="!isLoading">
-            <fa-icon icon="asterisk" size="3x" [spin]="true"></fa-icon>
-          </span>
-        </button>
-      </div>
-      <a [routerLink]="['/auth/register']">Don't have an account? Sign up here!</a>
-  </form>
-</fieldset>
-{{ loginForm.value | json }}
-{{ loginForm.status | json }}

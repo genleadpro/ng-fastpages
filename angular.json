@@ -27,10 +27,11 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/main.scss"
+              "src/styles/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jwt-decode/build/jwt-decode.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -84,8 +85,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
-              "src/main.scss"
+              "src/styles/styles.scss"
             ],
             "scripts": [],
             "assets": [
