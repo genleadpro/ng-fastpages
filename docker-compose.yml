@@ -11,7 +11,7 @@ services:
         - .:/app
     networks:
         - webnet
-app.sandbox:
+  app.sandbox:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
