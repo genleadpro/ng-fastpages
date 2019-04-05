@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from './material.module';
 import { ThemePickerModule } from './theme-picker';
-//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 

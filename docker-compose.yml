@@ -1,18 +1,15 @@
 version: '3.6'
 
 services:
-  sandbox.web:
-    build:
-      context: .
-      args:
-        env: sandbox
-    ports:
-      - "8080:80"
   app.web:
     build:
       context: .
+      dockerfile: ./docker/Dockerfile
       args:
         env: prod
-    ports:
-      - "8081:80"
-
+      volumes:
+        - .:/app
+    networks:
+        - webnet
+networks:
+  webnet:
