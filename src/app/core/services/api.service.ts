@@ -20,9 +20,9 @@ export class ApiService {
   private resovleBaseUrl(path: string) : string {
     if (PUBLIC_TENANT_SERVICES.find(x=> x == path))
       return BASE_URL;
-    let tenant = JSON.parse(localStorage.getItem('current_tenant'));
-    if (tenant.domain_url)
-      return env.apiProtocol + '://' + tenant.domain_url + ':'+ env.apiPort + env.apiPath;
+    let tenant_url = localStorage.getItem('tenant_url');
+    if (tenant_url)
+      return env.apiProtocol + '://' + tenant_url + ':'+ env.apiPort + env.apiPath;
     return '';
   }
 

@@ -2,6 +2,7 @@
 import env from './.env';
 
 export const environment = {
+  appTitle: 'NG-FastPages',
   production: true,
   envName: 'PROD',
   version: env.npm_package_version,

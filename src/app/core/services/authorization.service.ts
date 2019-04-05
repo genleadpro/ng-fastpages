@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-;
 import { environment } from '@env/environment';
 import { LoginResponse } from '@app/core/models/loginresponse.model';
 import { User } from '@app/core/models';
 import { UserService } from '@app/core/services/user.service';
+import * as jwtDecode from 'jwt-decode';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +31,10 @@ export class AuthorizationService {
 
     const subject = new ReplaySubject<LoginResponse>(1);
     subject.subscribe((r: LoginResponse) => {
+
       this.setAccessToken(r.access);
       this.setRefreshToken(r.refresh);
+      this.setTenantData(jwtDecode(r.access));
       this.updateCurrentUser();
     }, (err) => {
       this.handleAuthenticationError(err);
@@ -49,11 +53,14 @@ export class AuthorizationService {
 
     const refreshSubject = new ReplaySubject<LoginResponse>(1);
     refreshSubject.subscribe((r: LoginResponse) => {
+
       this.setAccessToken(r.access);
-      this.setRefreshToken(r.refresh);
+      // Currently refresh token will not provided (depends on server configuration)
+      // this.setRefreshToken(r.refresh);
+      this.setTenantData(jwtDecode(r.access));
       this.updateCurrentUser();
     }, (err) => {
-      this.handleAuthenticationError(err);
+      this.handleRefreshTokenError(err);
     });
 
     refreshObservable.subscribe(refreshSubject);
@@ -64,6 +71,7 @@ export class AuthorizationService {
     this.setAccessToken(null);
     this.setRefreshToken(null);
     this.setCurrentUser(null);
+    this.setTenantData(null);
   }
 
   isAuthenticated (): boolean {
@@ -76,12 +84,17 @@ export class AuthorizationService {
     this.setAccessToken(null);
     this.setRefreshToken(null);
     this.setCurrentUser(null);
+    this.setTenantData(null);
     if (err.status == 400) {
       if ("non_field_errors" in err.error) {
         console.log(err.error['non_field_errors']);
         return throwError(err.error['non_field_errors']);
       }
     }
+  }
+
+  private handleRefreshTokenError (err: any) {
+    console.log(err);
   }
 
   private setAccessToken (accessToken: string) {
@@ -97,6 +110,16 @@ export class AuthorizationService {
       localStorage.removeItem('refresh_token');
     } else {
       localStorage.setItem('refresh_token', refreshToken);
+    }
+  }
+
+  private setTenantData(decodedToken) {
+    if (!decodedToken) {
+      localStorage.removeItem('tenant_name');
+      localStorage.removeItem('tenant_url');
+    } else {
+      localStorage.setItem('tenant_name', decodedToken.tenant_name);
+      localStorage.setItem('tenant_url', decodedToken.tenant_url);
     }
   }
 

@@ -14,9 +14,10 @@ export class PageModel {
   product_image2: string;
   product_image3: string;
   product_image4: string;
+  product_image5: string;
+  product_image6: string;
   product_showcase1: string; //image showcase
   product_showcase2: string; //image showcase
   product_showcase3: string; //image showcase
   product_showcase4: string; //video showcase
-
 }

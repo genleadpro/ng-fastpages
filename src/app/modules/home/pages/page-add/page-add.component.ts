@@ -1,38 +1,86 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  //AfterContentInit,
+  OnDestroy
+} from '@angular/core';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { MatGridList } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription} from 'rxjs';
 import { first } from 'rxjs/operators';
 import { PageService } from '@app/core/services/page.service';
-import { PageModel } from '@app/core';
+import { FileInput } from 'ngx-material-file-input';
 
 @Component({
   selector: 'app-page-add',
   templateUrl: './page-add.component.html',
   styleUrls: ['./page-add.component.scss']
 })
-export class PageAddComponent implements OnInit {
+export class PageAddComponent implements OnInit, OnDestroy {
 
   pageForm: FormGroup;
   error: string;
   isLoading: boolean;
   submitted = false;
   returnUrl: string;
+  watcher: Subscription;
+  activeMediaQuery = '';
+  @ViewChild('grid') grid: MatGridList;
+  // Resize mat-grid-list column number based on screen size
+  gridByBreakpoint = {
+    xl: 3,
+    lg: 3,
+    md: 3,
+    sm: 3,
+    xs: 1
+  }
+
+  product_image1_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
+  product_image2_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
+  product_image3_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
+  product_image4_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
+  product_image5_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
 
   constructor(
+    private mediaObserver: MediaObserver,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private pageService: PageService
-  ) { }
+  ) {
+    this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
+      this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
+      this.grid.cols = this.gridByBreakpoint[change.mqAlias];
+    });
+  }
 
   ngOnInit() {
     this.buildForm();
     this.returnUrl = 'pages';
   }
 
+  ngOnDestroy() {
+    this.watcher.unsubscribe();
+  }
+
   get f () {
     return this.pageForm.controls;
+  }
+
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      console.log(event);
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (_event) => { // called once readAsDataURL is completed
+        event.target.name = reader.result;
+      }
+    }
   }
 
   // OnSubmit event
@@ -66,7 +114,13 @@ export class PageAddComponent implements OnInit {
       id: [],
       title: ['', [Validators.required]],
       slug: ['', []],
-      status: [true, [Validators.required]]
+      status: [true, [Validators.required]],
+      product_image1: [],
+      product_image2: [],
+      product_image3: [],
+      product_image4: [],
+      product_image5: [],
+      product_image6: []
     });
   }
 

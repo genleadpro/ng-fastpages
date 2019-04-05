@@ -5,10 +5,10 @@ import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from './material.module';
 import { ThemePickerModule } from './theme-picker';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgxMasonryModule } from 'ngx-masonry';
 import { library } from '@fortawesome/fontawesome-svg-core';
+
 
 import {
   faAsterisk,
@@ -68,6 +68,7 @@ library.add(
 import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
+
 @NgModule({
     imports: [
       ThemePickerModule,
@@ -75,7 +76,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
       FormsModule,
       ReactiveFormsModule,
       RouterModule,
-      NgbModule.forRoot(),
+      //NgbModule.forRoot(),
       FontAwesomeModule
     ],
     declarations: [
@@ -87,12 +88,10 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
       FormsModule,
       ReactiveFormsModule,
       RouterModule,
-
       MaterialModule,
 
-      NgbModule,
+      //NgbModule,
       FontAwesomeModule,
-      NgxMasonryModule,
 
       ControlMessagesComponent,
       SpinnerComponent

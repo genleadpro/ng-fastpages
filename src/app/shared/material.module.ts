@@ -22,6 +22,9 @@ import { MatSliderModule } from '@angular/material/';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 import { MatTableModule } from '@angular/material';
+import { MatPaginatorModule } from '@angular/material';
+import { MatGridListModule } from '@angular/material/grid-list'
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   declarations: [],
@@ -48,7 +51,10 @@ import { MatTableModule } from '@angular/material';
     MatSliderModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatGridListModule,
+    MaterialFileInputModule
   ],
   exports: [
     MatButtonModule,
@@ -71,7 +77,10 @@ import { MatTableModule } from '@angular/material';
     MatSliderModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatGridListModule,
+    MaterialFileInputModule
   ]
 })
 export class MaterialModule { }

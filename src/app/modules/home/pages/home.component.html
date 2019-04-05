@@ -2,6 +2,12 @@
 <div>
   <mat-toolbar>
     <mat-toolbar-row>
+        <div class="example-header">
+            <mat-form-field>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+        </div>
+        <div class="fill-remaining-space"></div>
         <button mat-raised-button (click)="onAddClicked()">Add Sale Page</button>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -28,5 +34,6 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
+  <mat-paginator [pageSizeOptions]="[2, 5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
 

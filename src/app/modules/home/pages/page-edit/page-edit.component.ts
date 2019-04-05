@@ -52,7 +52,7 @@ export class PageEditComponent implements OnInit {
     this.pageService.updatePage(this.id, this.pageForm.value)
       .pipe(first())
       .subscribe(
-        data => {
+        data=> {
           // console.log('successfull login, then return to ', this.returnUrl);
           this.router.navigate([this.returnUrl], {relativeTo: this.route});
       },
