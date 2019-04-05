@@ -11,5 +11,15 @@ services:
         - .:/app
     networks:
         - webnet
+app.sandbox:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      args:
+        env: prod
+      volumes:
+        - .:/app
+    networks:
+        - webnet
 networks:
   webnet:
