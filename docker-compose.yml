@@ -1,7 +1,18 @@
 version: '3.6'
 
 services:
-  app:
-    build: .
+  sandbox.web:
+    build:
+      context: .
+      args:
+        env: sandbox
     ports:
-    - '3000::80'
+      - "8080:80"
+  app.web:
+    build:
+      context: .
+      args:
+        env: prod
+    ports:
+      - "8081:80"
+
