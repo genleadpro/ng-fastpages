@@ -2,6 +2,6 @@ version: '3.6'
 
 services:
   app:
-    build: ./src
-    port:
-    - '80:80'
+    build: .
+    ports:
+    - '3000::80'
