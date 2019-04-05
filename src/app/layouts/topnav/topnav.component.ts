@@ -11,6 +11,7 @@ import { environment } from '@env/environment';
 export class TopnavComponent implements OnInit {
     public pushRightClass: string;
     public APP_TITLE = environment.appTitle;
+    public production = environment.envName === 'PROD';
     constructor(public router: Router, private translate: TranslateService) {
         this.router.events.subscribe(val => {
             if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {

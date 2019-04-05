@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
+import { environment } from '@env/environment';
 
 @Component({
     selector: 'app-nav',
