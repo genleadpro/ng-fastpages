@@ -7,8 +7,6 @@ services:
       dockerfile: ./docker/Dockerfile
       args:
         env: prod
-      volumes:
-        - .:/app
     networks:
         - webnet
   app.sandbox:
@@ -16,11 +14,9 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile
       args:
-        env: prod
-      volumes:
-        - .:/app
+        env: snadbox
     networks:
         - webnet
 networks:
   webnet:
-volumes:
+
