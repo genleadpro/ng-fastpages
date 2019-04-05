@@ -15,12 +15,12 @@ RUN cd /app && npm install
 COPY .  /app
 
 # Build with $env variable from outside
-RUN cd /app && npm run build -- --output-path=./dist --configuration=$configuration
+RUN cd /app && npm run build -- --output-path=./dist/out --configuration=$configuration
 
 # Build a small nginx image with static website
 FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist/out /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

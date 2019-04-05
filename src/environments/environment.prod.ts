@@ -2,14 +2,15 @@
 import env from './.env';
 
 export const environment = {
-  appTitle: 'NG-FastPages',
+  appTitle: 'GenLead Pro',
   production: true,
   envName: 'PROD',
   version: env.npm_package_version,
   serverUrl: '/api',
-  authEndpoint: 'http://fastpages.code:8000/api/auth',
-  apiEndpoint: 'http://fastpages.code:8000/api/v1',
+  authEndpoint: 'http://genleadpro.com:8000/api/auth',
+  apiEndpoint: 'http://genleadpro.com:8000/api/v1',
+  apiProtocol: 'http', // or 'https'
   apiPort: '8000', // used to compose tenant api end point
   apiPath: '/api/v1', // used to compose tenant api end point
-  whiteLists: ["fastpages.code:8000", "fastpages.code"]
+  whiteLists: ["genleadpro.com:8000", "genleadpro.com"]
 };
