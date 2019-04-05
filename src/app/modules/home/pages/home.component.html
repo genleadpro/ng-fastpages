@@ -27,8 +27,8 @@
       <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
           <mat-cell *matCellDef="let page" >
-            <button mat-raised-button (click)="onEditClicked(page.id)">Edit</button>
-            <button mat-raised-button (click)="onDeleteClicked(page.id)">Delete</button>
+            <button mat-raised-button (click)="onEditClicked(page.id)"><mat-icon>edit</mat-icon></button>
+            <button mat-raised-button (click)="onDeleteClicked(page.id)"><mat-icon>delete_outline</mat-icon></button>
           </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -14,7 +14,7 @@ RUN npm install @angular/cli@7.2.0 -g
 RUN cd /app && npm install
 COPY .  /app
 
-# Build with $env variable from outside
+# Build with $configuration variable from outside
 RUN cd /app && npm run build -- --output-path=./dist/out --configuration=$configuration
 
 # Build a small nginx image with static website
