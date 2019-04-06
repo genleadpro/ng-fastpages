@@ -22,7 +22,7 @@
     "@angular/platform-browser": "^7.2.10",
     "@angular/platform-browser-dynamic": "^7.2.10",
     "@angular/router": "^7.2.10",
-    "@auth0/angular-jwt": "github:soap/angular2-jwt#master",
+    "@auth0/angular-jwt": "git+https://github.com/soap/angular2-jwt#master",
     "@fortawesome/angular-fontawesome": "^0.3.0",
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
     "@fortawesome/fontawesome-svg-core": "^1.2.16",
