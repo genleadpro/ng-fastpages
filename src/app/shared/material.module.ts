@@ -25,6 +25,7 @@ import { MatTableModule } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material';
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { InputFileModule } from 'ngx-input-file';
 
 @NgModule({
   declarations: [],
@@ -54,7 +55,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MatTableModule,
     MatPaginatorModule,
     MatGridListModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    InputFileModule
+
   ],
   exports: [
     MatButtonModule,
@@ -80,7 +83,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MatTableModule,
     MatPaginatorModule,
     MatGridListModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    InputFileModule
   ]
 })
 export class MaterialModule { }

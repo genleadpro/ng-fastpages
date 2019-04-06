@@ -11,9 +11,20 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription} from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, filter } from 'rxjs/operators';
 import { PageService } from '@app/core/services/page.service';
-import { FileInput } from 'ngx-material-file-input';
+import { isString } from 'util';
+// import { FileInput } from 'ngx-material-file-input';
+import { SpinnerComponent } from './../../../../shared/components/spinner/spinner.component';
+
+export class acceptedFile {
+  name: string;
+  file: File;
+  constructor (name: string, file: File) {
+    this.name = name;
+    this.file = file;
+  }
+}
 
 @Component({
   selector: 'app-page-add',
@@ -45,6 +56,7 @@ export class PageAddComponent implements OnInit, OnDestroy {
   product_image4_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
   product_image5_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
 
+  acceptedFiles = [];
   constructor(
     private mediaObserver: MediaObserver,
     private formBuilder: FormBuilder,
@@ -60,7 +72,7 @@ export class PageAddComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.buildForm();
-    this.returnUrl = 'pages';
+    this.returnUrl = '../../home';
   }
 
   ngOnDestroy() {
@@ -71,14 +83,26 @@ export class PageAddComponent implements OnInit, OnDestroy {
     return this.pageForm.controls;
   }
 
-  onSelectFile(event) {
+  onFileAccepted(event, el) {
+    let aFile = new acceptedFile(el, event);
+    this.acceptedFiles.push(aFile);
+    console.log(this.acceptedFiles);
+  }
+
+  onFileDeleted(event, el) {
+
+  }
+
+  onSelectFile(event, src) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-      console.log(event);
+      console.log("select file : ", event.name, src);
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (_event) => { // called once readAsDataURL is completed
-        event.target.name = reader.result;
+        var previewImg = document.getElementById(src + '_preview');
+        //if (previewImg)
+         // this.= _event.target.result;
       }
     }
   }
@@ -91,7 +115,18 @@ export class PageAddComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
-    this.pageService.addPage(this.pageForm.value)
+    let formData = new FormData();
+    let data = this.pageForm.value;
+
+
+    this.acceptedFiles.forEach(obj => {
+      formData.append(obj.name, obj.file.file, obj.file.name);
+    });
+
+    formData.append('title', this.pageForm.get('title').value);
+    formData.append('slug', this.pageForm.get('slug').value);
+    formData.append('status', this.pageForm.get('status').value);
+    this.pageService.addPage(formData)
       .pipe(first())
       .subscribe(
         data => {

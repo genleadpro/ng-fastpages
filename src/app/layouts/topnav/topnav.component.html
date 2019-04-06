@@ -11,7 +11,8 @@
         </mat-form-field>
     </form>
     <span class="nav-spacer"></span>
-    <span *ngIf="!production">Devepment Mode</span>
+    <span>{{ myTenant }} </span>
+    <span *ngIf="!production"><mat-icon>system_update</mat-icon></span>
     <button class="hidden-sm" mat-icon-button [matMenuTriggerFor]="language">
         <mat-icon>language</mat-icon>
     </button>

@@ -34,76 +34,52 @@
           <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
             <mat-card class="example-card">
               <mat-card-header>
+                Product Image 1
               </mat-card-header>
               <mat-card-actions>
-                <mat-form-field>
-                  <ngx-mat-file-input #prodImg1 formControlName="product_image1" placeholder="Product Image 1"></ngx-mat-file-input>
-                  <button mat-icon-button matSuffix X *ngIf="!prodImg1.empty" (click)="prodImg1.clear($event)">
-                    <mat-icon>clear</mat-icon>
-                  </button>
-                </mat-form-field>
+                <input-file #prdImg1 formControlName="product_image1" (acceptedFile)="onFileAccepted($event, 'product_image1')"></input-file>
               </mat-card-actions>
             </mat-card>
             <mat-card class="example-card">
               <mat-card-header>
+                  Product Image 2
               </mat-card-header>
               <mat-card-actions>
-                <mat-form-field>
-                  <ngx-mat-file-input #prodImg2 formControlName="product_image2" placeholder="Product Image 2"></ngx-mat-file-input>
-                  <button mat-icon-button matSuffix X *ngIf="!prodImg2.empty" (click)="prodImg2.clear($event)">
-                    <mat-icon>clear</mat-icon>
-                  </button>
-                </mat-form-field>
+                <input-file  #prdImg2 formControlName="product_image2" (acceptedFile)="onFileAccepted($event, 'product_image2')"></input-file>
               </mat-card-actions>
             </mat-card>
             <mat-card class="example-card">
               <mat-card-header>
+                  Product Image 3
               </mat-card-header>
               <mat-card-actions>
-                <mat-form-field>
-                  <ngx-mat-file-input #prodImg3 formControlName="product_image3" placeholder="Product Image 3"></ngx-mat-file-input>
-                  <button mat-icon-button matSuffix X *ngIf="!prodImg3.empty" (click)="prodImg3.clear($event)">
-                    <mat-icon>clear</mat-icon>
-                  </button>
-                </mat-form-field>
+                  <input-file  #prdImg3 formControlName="product_image3" (acceptedFile)="onFileAccepted($event, 'product_image3')"></input-file>
               </mat-card-actions>
             </mat-card>
             <mat-card class="example-card">
                 <mat-card-header>
+                    Product Image 4
                 </mat-card-header>
                 <mat-card-actions>
-                  <mat-form-field>
-                    <ngx-mat-file-input #prodImg4 formControlName="product_image4" placeholder="Product Image 4"></ngx-mat-file-input>
-                    <button mat-icon-button matSuffix X *ngIf="!prodImg4.empty" (click)="prodImg4.clear($event)">
-                      <mat-icon>clear</mat-icon>
-                    </button>
-                  </mat-form-field>
+                  <input-file  #prdImg4 formControlName="product_image4" (acceptedFile)="onFileAccepted($event, 'product_image4')"></input-file>
                 </mat-card-actions>
               </mat-card>
               <mat-card class="example-card">
                   <mat-card-header>
+                    Product Image 5
                   </mat-card-header>
                   <mat-card-actions>
-                    <mat-form-field>
-                      <ngx-mat-file-input #prodImg5 formControlName="product_image5" placeholder="Product Image 5"></ngx-mat-file-input>
-                      <button mat-icon-button matSuffix X *ngIf="!prodImg5.empty" (click)="prodImg5.clear($event)">
-                        <mat-icon>clear</mat-icon>
-                      </button>
-                    </mat-form-field>
+                    <input-file  #prdImg5 formControlName="product_image5" (acceptedFile)="onFileAccepted($event, 'product_image5')"></input-file>
                   </mat-card-actions>
                 </mat-card>
                 <mat-card class="example-card">
-                    <mat-card-header>
+                  <mat-card-header>
                     </mat-card-header>
+                      Product Image 6
                     <mat-card-actions>
-                      <mat-form-field>
-                        <ngx-mat-file-input #prodImg6 formControlName="product_image6" placeholder="Product Image 6"></ngx-mat-file-input>
-                        <button mat-icon-button matSuffix X *ngIf="!prodImg6.empty" (click)="prodImg6.clear($event)">
-                          <mat-icon>clear</mat-icon>
-                        </button>
-                      </mat-form-field>
+                      <input-file  #prdImg6 formControlName="product_image6" (acceptedFile)="onFileAccepted($event, 'product_image6')"></input-file>
                     </mat-card-actions>
-                  </mat-card>
+                </mat-card>
           </div>
         </mat-tab>
         <mat-tab label="Second"> Content 2 </mat-tab>

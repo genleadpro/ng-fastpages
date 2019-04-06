@@ -12,6 +12,7 @@ export class TopnavComponent implements OnInit {
     public pushRightClass: string;
     public APP_TITLE = environment.appTitle;
     public production = environment.envName === 'PROD';
+    public myTenant : string;
     constructor(public router: Router, private translate: TranslateService) {
         this.router.events.subscribe(val => {
             if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
@@ -22,6 +23,7 @@ export class TopnavComponent implements OnInit {
 
     ngOnInit() {
         this.pushRightClass = 'push-right';
+        this.myTenant = localStorage.getItem('tenant_name');
     }
 
     isToggled(): boolean {
@@ -42,4 +44,5 @@ export class TopnavComponent implements OnInit {
     changeLang(language: string) {
         this.translate.use(language);
     }
+
 }

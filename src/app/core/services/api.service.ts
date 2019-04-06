@@ -14,6 +14,7 @@ const PUBLIC_TENANT_SERVICES = [
 })
 export class ApiService {
   private options = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+  private fileOptions = { headers: new HttpHeaders().set('Content-Type', undefined /*'multipart/form-data'*/)} ;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -39,6 +40,12 @@ export class ApiService {
   public post(path: string, body: object = {}): Observable<any> {
     return this.httpClient
       .post(this.resovleBaseUrl(path) + path, JSON.stringify(body), this.options)
+      .pipe(catchError(this.formatErrors));
+  }
+
+  public postFormData(path: string, body: object = {}): Observable<any> {
+    return this.httpClient
+      .post(this.resovleBaseUrl(path) + path, body, this.fileOptions)
       .pipe(catchError(this.formatErrors));
   }
 

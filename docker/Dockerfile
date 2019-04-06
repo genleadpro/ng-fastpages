@@ -5,7 +5,8 @@ FROM node:alpine as builder
 # prod|sandbox its value will be come from outside
 ARG configuration=production
 
-RUN apk update && apk add --no-cache make git
+# alphine image dit not preinstalled git and related for npm usgae
+RUN apk update && apk upgrade && apk add --no-cache make git openssh bash
 
 # Move our files into directory name "app"
 WORKDIR /app

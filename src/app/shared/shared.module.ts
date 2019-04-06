@@ -7,7 +7,7 @@ import { MaterialModule } from './material.module';
 import { ThemePickerModule } from './theme-picker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-
+import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 
 import {
   faAsterisk,
@@ -67,6 +67,7 @@ library.add(
 import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
+const config: InputFileConfig = {};
 
 @NgModule({
     imports: [
@@ -76,6 +77,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
       ReactiveFormsModule,
       RouterModule,
       //NgbModule.forRoot(),
+      InputFileModule.forRoot(config),
       FontAwesomeModule
     ],
     declarations: [

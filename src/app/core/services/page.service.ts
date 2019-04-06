@@ -31,8 +31,8 @@ export class PageService {
         return this.apiService.get(routes.page(id));
     }
 
-    addPage(page: PageModel) {
-      return this.apiService.post(routes.add, page);
+    addPage(page: FormData) {
+      return this.apiService.postFormData(routes.add, page);
     }
 
     updatePage(id: number, page: PageModel) {
