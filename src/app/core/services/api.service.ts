@@ -14,7 +14,7 @@ const PUBLIC_TENANT_SERVICES = [
 })
 export class ApiService {
   private options = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-  private fileOptions = { headers: new HttpHeaders().set('Content-Type', undefined /*'multipart/form-data'*/)} ;
+  private fileOptions = { headers: new HttpHeaders().set('Accept', 'application/json')} ;
 
   constructor(private httpClient: HttpClient) {}
 

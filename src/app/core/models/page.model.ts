@@ -3,12 +3,16 @@ export class PageModel {
   title: string;
   slug: string;
   status : boolean;
+  available_on: Date;
+  available_off: Date;
 
   product_name: string;
-  product_price: number;
-  product_discount_price: number;
   product_description: string;
   product_details: string;
+  product_price: number;
+  product_discount_price: number;
+  product_discount_until: Date;
+
   product_size_img: string;
   product_image1: string;
   product_image2: string;
@@ -16,6 +20,7 @@ export class PageModel {
   product_image4: string;
   product_image5: string;
   product_image6: string;
+
   product_showcase1: string; //image showcase
   product_showcase2: string; //image showcase
   product_showcase3: string; //image showcase

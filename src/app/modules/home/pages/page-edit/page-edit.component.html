@@ -1,31 +1,100 @@
-<div class="col-md-12">
-    <h2 class="text-center">Edit Page</h2>
-    <form  [formGroup]="pageForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label>Title:</label>
-        <input type="text" formControlName="title" placeholder="Title" required [(ngModel)]="pageModel.title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
-        <div *ngIf="submitted && f.title.errors">
-          <div *ngIf="f.title.errors.required">Title is required</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Slug:</label>
-        <input type="text" formControlName="slug" placeholder="Slug" [(ngModel)]="pageModel.slug" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.slug.errors }">
-        <div *ngIf="submitted && f.slug.errors">
-          <div *ngIf="f.slug.errors.required">Slug is required</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Status:</label>
-        <input type="text" formControlName="status" placeholder="Status" class="form-control" [(ngModel)]="pageModel.status" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
-        <div *ngIf="submitted && f.status.errors">
-          <div *ngIf="f.status.errors.required">Status is required</div>
-        </div>
-      </div>
-      <input type="hidden" formControlName="id" [(ngModel)]="pageModel.id" />
-      <button type="submit" class="btn btn-info">Save</button>
-      <button type="button" (click)="onCancelClicked()" class="btn btn-cancel">Cancel</button>
-    </form>
-  </div>
+<form [formGroup]="pageForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-header>
+      <h2 class="text-center">Add Page</h2>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-grid-list #grid cols="3" rowHeight="2:1">
+          <mat-grid-tile>
+            <mat-form-field>
+              <label>Title</label>
+              <input matInput formControlName="title" placeholder="Title" required/>
+              <app-control-messages [control]="f.title"></app-control-messages>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field>
+              <label>Slug</label>
+              <input matInput formControlName="slug" placeholder="Slug" />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field>
+            <label>Status:</label>
+              <mat-select formControlName="status" required>
+                <mat-option>-- None --</mat-option>
+                <mat-option value="0">Not Active</mat-option>
+                <mat-option value="1">Active</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      <mat-tab-group>
+        <mat-tab label="First">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <mat-card class="example-card">
+              <mat-card-header>
+                Product Image 1
+              </mat-card-header>
+              <mat-card-actions>
+                <input-file #prdImg1 formControlName="product_image1" (acceptedFile)="onFileAccepted($event, 'product_image1')"></input-file>
+              </mat-card-actions>
+            </mat-card>
+            <mat-card class="example-card">
+              <mat-card-header>
+                  Product Image 2
+              </mat-card-header>
+              <mat-card-actions>
+                <input-file  #prdImg2 formControlName="product_image2" (acceptedFile)="onFileAccepted($event, 'product_image2')"></input-file>
+              </mat-card-actions>
+            </mat-card>
+            <mat-card class="example-card">
+              <mat-card-header>
+                  Product Image 3
+              </mat-card-header>
+              <mat-card-actions>
+                  <input-file  #prdImg3 formControlName="product_image3" (acceptedFile)="onFileAccepted($event, 'product_image3')"></input-file>
+              </mat-card-actions>
+            </mat-card>
+            <mat-card class="example-card">
+                <mat-card-header>
+                    Product Image 4
+                </mat-card-header>
+                <mat-card-actions>
+                  <input-file  #prdImg4 formControlName="product_image4" (acceptedFile)="onFileAccepted($event, 'product_image4')"></input-file>
+                </mat-card-actions>
+              </mat-card>
+              <mat-card class="example-card">
+                  <mat-card-header>
+                    Product Image 5
+                  </mat-card-header>
+                  <mat-card-actions>
+                    <input-file  #prdImg5 formControlName="product_image5" (acceptedFile)="onFileAccepted($event, 'product_image5')"></input-file>
+                  </mat-card-actions>
+                </mat-card>
+                <mat-card class="example-card">
+                  <mat-card-header>
+                    </mat-card-header>
+                      Product Image 6
+                    <mat-card-actions>
+                      <input-file  #prdImg6 formControlName="product_image6" (acceptedFile)="onFileAccepted($event, 'product_image6')"></input-file>
+                    </mat-card-actions>
+                </mat-card>
+          </div>
+        </mat-tab>
+        <mat-tab label="Second"> Content 2 </mat-tab>
+        <mat-tab label="Third"> Content 3 </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button type="submit" color="Primary">
+        <mat-icon class="nav-icon">save</mat-icon>
+        Save
+      </button>
+      <button mat-button type="button" (click)="onCancelClicked()">
+        <mat-icon class="nav-icon">cancel</mat-icon>
+        Cancel
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

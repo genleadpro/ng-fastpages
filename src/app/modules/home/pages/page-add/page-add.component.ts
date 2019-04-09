@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   ViewChild,
-  //AfterContentInit,
   OnDestroy
 } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
@@ -11,11 +10,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription} from 'rxjs';
-import { first, filter } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
+import { findIndex as _findIndex } from 'lodash';
+
 import { PageService } from '@app/core/services/page.service';
-import { isString } from 'util';
-// import { FileInput } from 'ngx-material-file-input';
-import { SpinnerComponent } from './../../../../shared/components/spinner/spinner.component';
+// import { isString } from 'util';
+// import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
 
 export class acceptedFile {
   name: string;
@@ -43,18 +43,12 @@ export class PageAddComponent implements OnInit, OnDestroy {
   @ViewChild('grid') grid: MatGridList;
   // Resize mat-grid-list column number based on screen size
   gridByBreakpoint = {
-    xl: 3,
-    lg: 3,
-    md: 3,
+    xl: 4,
+    lg: 4,
+    md: 4,
     sm: 3,
     xs: 1
   }
-
-  product_image1_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
-  product_image2_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
-  product_image3_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
-  product_image4_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
-  product_image5_url : string = "https://material.angular.io/assets/img/examples/shiba2.jpg";
 
   acceptedFiles = [];
   constructor(
@@ -83,28 +77,18 @@ export class PageAddComponent implements OnInit, OnDestroy {
     return this.pageForm.controls;
   }
 
-  onFileAccepted(event, el) {
-    let aFile = new acceptedFile(el, event);
+  // Done: TEST
+  onFileAccepted(event, key) {
+    let aFile = new acceptedFile(key, event);
     this.acceptedFiles.push(aFile);
-    console.log(this.acceptedFiles);
   }
 
-  onFileDeleted(event, el) {
-
-  }
-
-  onSelectFile(event, src) {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      console.log("select file : ", event.name, src);
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-      reader.onload = (_event) => { // called once readAsDataURL is completed
-        var previewImg = document.getElementById(src + '_preview');
-        //if (previewImg)
-         // this.= _event.target.result;
-      }
-    }
+  // Done: TEST
+  onFileDeleted(event, key) {
+    const index : number = _findIndex(this.acceptedFiles, function(item) {
+      return item.name == key;
+    });
+    if (index !== -1) this.acceptedFiles.splice(index, 1);
   }
 
   // OnSubmit event
@@ -147,9 +131,16 @@ export class PageAddComponent implements OnInit, OnDestroy {
   buildForm() {
     this.pageForm = this.formBuilder.group({
       id: [],
-      title: ['', [Validators.required]],
-      slug: ['', []],
+      title: ['', [Validators.required, Validators.maxLength(200)]],
+      slug: ['', [Validators.minLength(5), Validators.maxLength(10)]],
       status: [true, [Validators.required]],
+      available_on: [],
+      available_off: [],
+      product_name: ['', [Validators.required, Validators.maxLength(100)]],
+      product_description: [''],
+      product_price: [],
+      product_discount_price: [],
+      product_discount_until: [],
       product_image1: [],
       product_image2: [],
       product_image3: [],
