@@ -15,7 +15,9 @@ export const environment = {
   //apiHost: It is different by server tenant
   apiPort: '8000', // used to compose tenant api end point
   apiPath: '/api/v1', // used to compose tenant api end point
-  whiteLists: ["fastpages.code:8000", "fastpages.code"]
+  whiteLists: ["fastpages.code:8000", "fastpages.code"],
+  serverDateFormat: 'YYYY-MM-DD',
+  serverDateTimeFormat: 'YYYY-MM-DD hh:mm:ss'
 };
 
 /*

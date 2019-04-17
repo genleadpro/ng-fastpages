@@ -8,6 +8,8 @@ import { ThemePickerModule } from './theme-picker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
+import { AngularEditorModule, AngularEditorConfig } from '@kolkov/angular-editor';
+
 
 import {
   faAsterisk,
@@ -66,8 +68,34 @@ library.add(
 
 import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 const config: InputFileConfig = {};
+
+const editorConfig: AngularEditorConfig = {
+  editable: true,
+  spellcheck: true,
+  height: '25rem',
+  minHeight: '5rem',
+  placeholder: 'Enter text here...',
+  translate: 'no',
+  uploadUrl: 'v1/images', // if needed
+  customClasses: [ // optional
+    {
+      name: "quote",
+      class: "quote",
+    },
+    {
+      name: 'redText',
+      class: 'redText'
+    },
+    {
+      name: "titleText",
+      class: "titleText",
+      tag: "h1",
+    },
+  ]
+};
 
 @NgModule({
     imports: [
@@ -78,7 +106,8 @@ const config: InputFileConfig = {};
       RouterModule,
       //NgbModule.forRoot(),
       InputFileModule.forRoot(config),
-      FontAwesomeModule
+      FontAwesomeModule,
+      AngularEditorModule,
     ],
     declarations: [
       ControlMessagesComponent,
@@ -93,9 +122,10 @@ const config: InputFileConfig = {};
 
       //NgbModule,
       FontAwesomeModule,
-
       ControlMessagesComponent,
-      SpinnerComponent
-    ]
+      SpinnerComponent,
+      AngularEditorModule
+    ],
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class SharedModule { }

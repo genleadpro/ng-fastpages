@@ -12,7 +12,7 @@ import {
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { TopnavComponent } from '../topnav/topnav.component';
 import { ContentLayoutComponent } from './content-layout.component';
-import { NavComponent } from '../nav/nav.component';
+import { FooterComponent } from './../footer/footer.component';
 
 @NgModule({
   imports: [
@@ -26,6 +26,11 @@ import { NavComponent } from '../nav/nav.component';
       MatListModule,
       //TranslateModule
   ],
-  declarations: [ContentLayoutComponent, NavComponent, TopnavComponent, SidebarComponent]
+  declarations: [
+    ContentLayoutComponent,
+    TopnavComponent,
+    SidebarComponent,
+    FooterComponent
+  ]
 })
 export class ContentLayoutModule {}

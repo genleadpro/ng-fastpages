@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, VERSION } from '@angular/core';
 import { environment as env } from '@env/environment';
 import { Observable } from 'rxjs';
 import { ThemeService } from '@app/core';
@@ -12,7 +12,7 @@ export class FooterComponent implements OnInit {
   @Output() changeTheme: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   year = new Date().getFullYear();
-  version = 2;
+  version = VERSION.full;
   envName = env.envName;
   isDarkTheme: Observable<boolean>;
 

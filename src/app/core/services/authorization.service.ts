@@ -55,7 +55,7 @@ export class AuthorizationService {
     refreshSubject.subscribe((r: LoginResponse) => {
 
       this.setAccessToken(r.access);
-      // Currently refresh token will not provided (depends on server configuration)
+      // Currently refresh token will not provided (depends on Django SimpleJWT server configuration)
       // this.setRefreshToken(r.refresh);
       this.setTenantData(jwtDecode(r.access));
       this.updateCurrentUser();
@@ -74,9 +74,13 @@ export class AuthorizationService {
     this.setTenantData(null);
   }
 
+  /**
+   * User is still logined if refresh token is not expired.
+   * As system will automatially refresh new access token.
+   */
   isAuthenticated (): boolean {
     const jwtHelper = new JwtHelperService();
-    return !jwtHelper.isTokenExpired(this.getAccessToken());
+    return !jwtHelper.isTokenExpired(this.getRefreshToken());
   }
 
   private handleAuthenticationError (err: any) {

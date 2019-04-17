@@ -11,7 +11,8 @@ export class ValidationService {
       invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number.',
       maxlength: `The field can't contain more than ${validatorValue.requiredLength} characters.`,
       minlength: `The field must contain atleast ${validatorValue.requiredLength} characters.`,
-      email: `Invalid e-mail address provided.`
+      email: `Invalid e-mail address provided.`,
+      slug: 'Invalid slug provided. Must include letter(s)'
     };
 
     return config[validatorName];

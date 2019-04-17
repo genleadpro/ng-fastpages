@@ -37,6 +37,12 @@ export class ApiService {
       .pipe(catchError(this.formatErrors));
   }
 
+  public putFormData(path: string, body: object = {}): Observable<any> {
+    return this.httpClient
+      .put(this.resovleBaseUrl(path) + path, body, this.fileOptions)
+      .pipe(catchError(this.formatErrors));
+  }
+
   public post(path: string, body: object = {}): Observable<any> {
     return this.httpClient
       .post(this.resovleBaseUrl(path) + path, JSON.stringify(body), this.options)

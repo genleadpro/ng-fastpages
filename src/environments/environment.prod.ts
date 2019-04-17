@@ -12,5 +12,7 @@ export const environment = {
   apiProtocol: 'http', // or 'https'
   apiPort: '8000', // used to compose tenant api end point
   apiPath: '/api/v1', // used to compose tenant api end point
-  whiteLists: ["genleadpro.com:8000", "genleadpro.com"]
+  whiteLists: ["genleadpro.com:8000", "genleadpro.com"],
+  serverDateFormat: 'YYYY-MM-DD',
+  serverDateTimeFormat: 'YYYY-MM-DD hh:mm:ss'
 };

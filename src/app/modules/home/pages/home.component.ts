@@ -12,12 +12,13 @@ import { delay } from 'rxjs/operators';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  pages$: Observable<PageModel>;
+  pages: PageModel[];
   dataSource: MatTableDataSource<PageModel>; //new PageDataSource(this.pageService);
   @ViewChild(MatPaginator)  paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns = ['name', 'slug', 'status', 'actions'];
+  displayedColumns = ['select', 'name', 'slug', 'status', 'actions'];
+
 
   constructor(
     private router: Router,
@@ -50,6 +51,7 @@ export class HomeComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.data = data;
+      this.pages = data;
     });
   }
 
@@ -74,15 +76,11 @@ export class HomeComponent implements OnInit {
     this.chageDetector.detectChanges();
   }
 
-}
-/*
-export class PageDataSource extends DataSource<any> {
-  constructor(private pageService: PageService) {
-    super();
+  selectAll() {
+    for(let page of this.pages) {
+      page.selected = !page.selected;
+    }
   }
-  connect(): Observable<PageModel[]> {
-    return this.pageService.getAll();
-  }
-  disconnect() {}
+
 }
-*/
+

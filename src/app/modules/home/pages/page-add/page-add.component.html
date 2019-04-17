@@ -1,142 +1,40 @@
 <form [formGroup]="pageForm" (ngSubmit)="onSubmit()">
-  <mat-card>
-    <mat-card-header>
-      <h2 class="text-center">Add Page</h2>
-    </mat-card-header>
-    <mat-card-content>
-        <mat-grid-list #grid cols="3" rowHeight="2:1">
-          <mat-grid-tile>
-            <mat-form-field>
-              <input matInput formControlName="title" placeholder="Title" required/>
-              <app-control-messages [control]="f.title"></app-control-messages>
-            </mat-form-field>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field>
-              <input matInput formControlName="slug" placeholder="Slug" />
-            </mat-form-field>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-slide-toggle #status formControlName="status" [checked]="f.status.value" (click)="status.value =!status.value" color="primary">{{ f.status.value ? 'Active' : 'Not Active'}}</mat-slide-toggle>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field>
-              <input matInput formControlName="available_on" [matDatepicker]="pickerOn" placeholder="Available on date" />
-              <mat-datepicker-toggle matSuffix [for]="pickerOn"></mat-datepicker-toggle>
-              <mat-datepicker #pickerOn></mat-datepicker>
-            </mat-form-field>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field>
-              <input matInput formControlName="available_off" [matDatepicker]="pickerOff" placeholder="Available off date" />
-              <mat-datepicker-toggle matSuffix [for]="pickerOff"></mat-datepicker-toggle>
-              <mat-datepicker #pickerOff></mat-datepicker>
-            </mat-form-field>
-          </mat-grid-tile>
-        </mat-grid-list>
-      <mat-tab-group>
-        <mat-tab label="Product Detail">
-          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
-            <mat-card class="example-card">
-              <mat-card-header></mat-card-header>
-              <mat-card-content>
-                 <mat-form-field>
-                   <input matInput formControlName="product_name" required placeholder="Product_name" />
-                 </mat-form-field>
-                 <mat-form-field>
-                    <input matInput formControlName="product_price" placeholder="Product Price"/>
-                 </mat-form-field>
-                 <mat-form-field>
-                    <input matInput formControlName="product_price" placeholder="Product Discount Price"/>
-                 </mat-form-field>
-              </mat-card-content>
-            </mat-card>
-          </div>
-        </mat-tab>
-        <mat-tab label="Product Image">
-          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
-            <mat-card class="example-card">
-              <mat-card-header>
-                Product Image 1
-              </mat-card-header>
-              <mat-card-actions>
-                <input-file #prdImg1 formControlName="product_image1"
-                  (acceptedFile)="onFileAccepted($event, 'product_image1')"
-                  (deletedFile)="onFileDeleted($event, 'product_image1')"
-                >
-                </input-file>
-              </mat-card-actions>
-            </mat-card>
-            <mat-card class="example-card">
-              <mat-card-header>
-                  Product Image 2
-              </mat-card-header>
-              <mat-card-actions>
-                <input-file  #prdImg2 formControlName="product_image2"
-                (acceptedFile)="onFileAccepted($event, 'product_image2')"
-                (deletedFile)="onFileDeleted($event, 'product_image2')"
-                ></input-file>
-              </mat-card-actions>
-            </mat-card>
-            <mat-card class="example-card">
-              <mat-card-header>
-                  Product Image 3
-              </mat-card-header>
-              <mat-card-actions>
-                  <input-file  #prdImg3 formControlName="product_image3"
-                  (acceptedFile)="onFileAccepted($event, 'product_image3')"
-                  (deletedFile)="onFileDeleted($event, 'product_image3')"
-                  ></input-file>
-              </mat-card-actions>
-            </mat-card>
-            <mat-card class="example-card">
-                <mat-card-header>
-                    Product Image 4
-                </mat-card-header>
-                <mat-card-actions>
-                  <input-file  #prdImg4 formControlName="product_image4"
-                  (acceptedFile)="onFileAccepted($event, 'product_image4')"
-                  (deletedFile)="onFileDeleted($event, 'product_image4')"
-                  ></input-file>
-                </mat-card-actions>
-              </mat-card>
-              <mat-card class="example-card">
-                  <mat-card-header>
-                    Product Image 5
-                  </mat-card-header>
-                  <mat-card-actions>
-                    <input-file  #prdImg5 formControlName="product_image5"
-                    (acceptedFile)="onFileAccepted($event, 'product_image5')"
-                    (deletedFile)="onFileDeleted($event, 'product_image5')"
-                    ></input-file>
-                  </mat-card-actions>
-                </mat-card>
-                <mat-card class="example-card">
-                  <mat-card-header>
-                    </mat-card-header>
-                      Product Image 6
-                    <mat-card-actions>
-                      <input-file  #prdImg6 formControlName="product_image6"
-                       (acceptedFile)="onFileAccepted($event, 'product_image6')"
-                       (deletedFile)="onFileDeleted($event, 'product_image6')"
-                       ></input-file>
-                    </mat-card-actions>
-                </mat-card>
-          </div>
-        </mat-tab>
-        <mat-tab label="Third"> Content 3 </mat-tab>
-      </mat-tab-group>
-    </mat-card-content>
-    <mat-card-actions>
+    <mat-grid-list #grid cols="3" rowHeight="2:1">
+        <mat-grid-tile>
+          <mat-form-field>
+            <input matInput formControlName="title" placeholder="Title" required/>
+            <app-control-messages [control]="f.title"></app-control-messages>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input matInput formControlName="slug" placeholder="Slug" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-slide-toggle #status formControlName="status" [checked]="f.status.value" (click)="status.value =!status.value" color="primary">{{ f.status.value ? 'Active' : 'Not Active'}}</mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input matInput formControlName="available_on" [matDatepicker]="pickerOn" placeholder="Available on date" />
+            <mat-datepicker-toggle matSuffix [for]="pickerOn"></mat-datepicker-toggle>
+            <mat-datepicker #pickerOn></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input matInput formControlName="available_off" [matDatepicker]="pickerOff" placeholder="Available off date" />
+            <mat-datepicker-toggle matSuffix [for]="pickerOff"></mat-datepicker-toggle>
+            <mat-datepicker #pickerOff></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
       <button mat-button type="submit" color="Primary">
-        <mat-icon class="nav-icon">save</mat-icon>
-        Save
-      </button>
-      <button mat-button type="button" (click)="onCancelClicked()">
-        <mat-icon class="nav-icon">cancel</mat-icon>
-        Cancel
-      </button>
-    </mat-card-actions>
-  </mat-card>
+          <mat-icon class="nav-icon">save</mat-icon>
+          Save
+        </button>
+        <button mat-button type="button" (click)="onCancelClicked()">
+          <mat-icon class="nav-icon">cancel</mat-icon>
+          Cancel
+        </button>
 </form>
-{{ pageForm.value | json }}

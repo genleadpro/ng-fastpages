@@ -12,6 +12,10 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef><mat-checkbox (change)="selectAll()"></mat-checkbox></mat-header-cell>
+        <mat-cell *matCellDef="let page"><mat-checkbox [checked]="page.selected"></mat-checkbox></mat-cell>
+      </ng-container>
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
         <mat-cell *matCellDef="let page"> {{page.title}} </mat-cell>

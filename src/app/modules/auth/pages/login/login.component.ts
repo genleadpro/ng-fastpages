@@ -63,11 +63,15 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
       },
       error => {
+        console.log('something went wrong', error);
         if (error instanceof HttpErrorResponse && error.status == 400) {
           if ("non_field_errors" in error.error) {
             let allErrors = error.error['non_field_errors'];
             this.error = allErrors[0];
           }
+        }
+        if (error instanceof HttpErrorResponse && error.status == 0) {
+          this.error = 'Unknown error, server may be down.';
         }
         this.isLoading = false;
       });

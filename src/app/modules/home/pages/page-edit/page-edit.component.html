@@ -1,90 +1,283 @@
+<mat-toolbar>
+  <h3>Edit Page</h3>
+</mat-toolbar>
+<mat-divider></mat-divider>
 <form [formGroup]="pageForm" (ngSubmit)="onSubmit()">
   <mat-card>
-    <mat-card-header>
-      <h2 class="text-center">Add Page</h2>
-    </mat-card-header>
     <mat-card-content>
-        <mat-grid-list #grid cols="3" rowHeight="2:1">
-          <mat-grid-tile>
-            <mat-form-field>
-              <label>Title</label>
-              <input matInput formControlName="title" placeholder="Title" required/>
-              <app-control-messages [control]="f.title"></app-control-messages>
-            </mat-form-field>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field>
-              <label>Slug</label>
-              <input matInput formControlName="slug" placeholder="Slug" />
-            </mat-form-field>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field>
-            <label>Status:</label>
-              <mat-select formControlName="status" required>
-                <mat-option>-- None --</mat-option>
-                <mat-option value="0">Not Active</mat-option>
-                <mat-option value="1">Active</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </mat-grid-tile>
-        </mat-grid-list>
-      <mat-tab-group>
-        <mat-tab label="First">
-          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
-            <mat-card class="example-card">
-              <mat-card-header>
-                Product Image 1
-              </mat-card-header>
-              <mat-card-actions>
-                <input-file #prdImg1 formControlName="product_image1" (acceptedFile)="onFileAccepted($event, 'product_image1')"></input-file>
-              </mat-card-actions>
-            </mat-card>
-            <mat-card class="example-card">
-              <mat-card-header>
-                  Product Image 2
-              </mat-card-header>
-              <mat-card-actions>
-                <input-file  #prdImg2 formControlName="product_image2" (acceptedFile)="onFileAccepted($event, 'product_image2')"></input-file>
-              </mat-card-actions>
-            </mat-card>
-            <mat-card class="example-card">
-              <mat-card-header>
-                  Product Image 3
-              </mat-card-header>
-              <mat-card-actions>
-                  <input-file  #prdImg3 formControlName="product_image3" (acceptedFile)="onFileAccepted($event, 'product_image3')"></input-file>
-              </mat-card-actions>
-            </mat-card>
-            <mat-card class="example-card">
-                <mat-card-header>
-                    Product Image 4
-                </mat-card-header>
-                <mat-card-actions>
-                  <input-file  #prdImg4 formControlName="product_image4" (acceptedFile)="onFileAccepted($event, 'product_image4')"></input-file>
-                </mat-card-actions>
-              </mat-card>
-              <mat-card class="example-card">
-                  <mat-card-header>
-                    Product Image 5
-                  </mat-card-header>
-                  <mat-card-actions>
-                    <input-file  #prdImg5 formControlName="product_image5" (acceptedFile)="onFileAccepted($event, 'product_image5')"></input-file>
-                  </mat-card-actions>
-                </mat-card>
-                <mat-card class="example-card">
-                  <mat-card-header>
-                    </mat-card-header>
-                      Product Image 6
-                    <mat-card-actions>
-                      <input-file  #prdImg6 formControlName="product_image6" (acceptedFile)="onFileAccepted($event, 'product_image6')"></input-file>
-                    </mat-card-actions>
-                </mat-card>
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput formControlName="title" placeholder="Title" required>
+        </mat-form-field>
+        <app-control-messages [control]="f.title"></app-control-messages>
+        <mat-form-field>
+          <input matInput formControlName="slug" placeholder="Slug">
+        </mat-form-field>
+
+        <label>Status</label>
+        <mat-slide-toggle #status formControlName="status" [checked]="f.status.value"
+          (click)="status.value =!status.value" color="primary">{{ f.status.value ? 'Active' : 'Not Active'}}
+        </mat-slide-toggle>
+        <p></p>
+        <mat-divider></mat-divider>
+
+        <mat-form-field>
+          <input matInput formControlName="available_on" [matDatepicker]="pickerOn" placeholder="Available on date" />
+          <mat-datepicker-toggle matSuffix [for]="pickerOn"></mat-datepicker-toggle>
+          <mat-datepicker #pickerOn></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput formControlName="available_off" [matDatepicker]="pickerOff"
+            placeholder="Available off date" />
+          <mat-datepicker-toggle matSuffix [for]="pickerOff"></mat-datepicker-toggle>
+          <mat-datepicker #pickerOff></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Product Detail
+            </mat-panel-title>
+            <mat-panel-description>
+              Provide your product detail
+              <mat-icon>account_circle</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <mat-form-field>
+            <input matInput formControlName="product_name" placeholder="Product Name">
+          </mat-form-field>
+
+          <angular-editor id="editor1" formControlName="product_description" [config]="editorConfig"></angular-editor>
+
+          <mat-action-row>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Flash Sale
+            </mat-panel-title>
+            <mat-panel-description>
+              Input your product price, discount and end date.
+              <mat-icon>map</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <mat-form-field>
+            <input matInput formControlName="product_price" type="number" min="1" max="10000" step="1"
+              placeholder="Product Price">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput formControlName="product_discount_price" type="number" min="0" max="10000" step="1"
+              placeholder="Product Discount Price">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput formControlName="product_discount_until" [matDatepicker]="pickerUntil"
+              placeholder="Flash Sale End" />
+            <mat-datepicker-toggle matSuffix [for]="pickerUntil"></mat-datepicker-toggle>
+            <mat-datepicker #pickerUntil></mat-datepicker>
+          </mat-form-field>
+
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Product Variant Options
+            </mat-panel-title>
+            <mat-panel-description>
+              Input Product Variants and Variant Options
+              <mat-icon>date_range</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="example-contain" formArrayName="product_variant_options">
+            <button type="button" (click)="addProductVariantOption()">Add</button>
+            <p></p>
+            <div class="" *ngFor="let variant_option of productVariantOptionFormGroup.controls; let i = index;">
+                <div [formGroupName]="i" class="row">
+                    <mat-card class="example-card">
+                      <mat-card-header>
+
+                      </mat-card-header>
+                      <mat-card-content>
+                        <div class="form-group">
+                          <input type="hidden" formControlName="id">
+                          <mat-form-field>
+                            <mat-label>Name</mat-label>
+                            <input matInput class="form-control" formControlName="variant_name">
+                          </mat-form-field>
+                          <mat-error
+                            *ngIf="getProductVariantOptionFormGroup(i).controls['variant_name'].touched && getProductVariantOptionFormGroup(i).controls['variant_name'].hasError('required')">
+                            Name is required! </mat-error>
+                        </div>
+                        <div class="form-group">
+                          <mat-form-field>
+                            <mat-label>Value</mat-label>
+                            <input matInput class="form-control" formControlName="variant_value" type="text">
+                          </mat-form-field>
+                          <mat-error
+                            *ngIf="getProductVariantOptionFormGroup(i).controls['varinat_value'].touched && getProductVariantOptionFormGroup(i).controls['variant_value'].hasError('required')">
+                            Value is required! </mat-error>
+                        </div>
+                        <div class="form-group">
+                            <mat-label>Image</mat-label>
+                            <input-file formControlName="image">
+                          </input-file>
+                        </div>
+                      </mat-card-content>
+                      <mat-card-actions>
+                        <button type="button" (click)="removeProductVariantOption(i)">Delete</button>
+                      </mat-card-actions>
+                    </mat-card>
+              </div>
+            </div>
           </div>
-        </mat-tab>
-        <mat-tab label="Second"> Content 2 </mat-tab>
-        <mat-tab label="Third"> Content 3 </mat-tab>
-      </mat-tab-group>
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Product Images
+            </mat-panel-title>
+            <mat-panel-description>
+              Upload product images. They will be vertically displayed.
+              <mat-icon>date_range</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-card class="example-card">
+            <mat-card-header>
+              Product Image 1
+            </mat-card-header>
+            <mat-card-actions>
+              <input-file #prdImg1 formControlName="product_image1" linkEnabled="true"
+                (acceptedFile)="onFileAccepted($event, 'product_image1')"
+                (deletedFile)="onFileDeleted($event, 'product_image1')">
+              </input-file>
+            </mat-card-actions>
+          </mat-card>
+          <mat-card class="example-card">
+            <mat-card-header>
+              Product Image 2
+            </mat-card-header>
+            <mat-card-actions>
+              <input-file #prdImg2 formControlName="product_image2" linkEnabled="true"
+                (acceptedFile)="onFileAccepted($event, 'product_image2')"
+                (deletedFile)="onFileDeleted($event, 'product_image2')"></input-file>
+            </mat-card-actions>
+          </mat-card>
+          <mat-card class="example-card">
+            <mat-card-header>
+              Product Image 3
+            </mat-card-header>
+            <mat-card-actions>
+              <input-file #prdImg3 formControlName="product_image3"
+                (acceptedFile)="onFileAccepted($event, 'product_image3')"
+                (deletedFile)="onFileDeleted($event, 'product_image3')"></input-file>
+            </mat-card-actions>
+          </mat-card>
+          <mat-card class="example-card">
+            <mat-card-header>
+              Product Image 4
+            </mat-card-header>
+            <mat-card-actions>
+              <input-file #prdImg4 formControlName="product_image4"
+                (acceptedFile)="onFileAccepted($event, 'product_image4')"
+                (deletedFile)="onFileDeleted($event, 'product_image4')"></input-file>
+            </mat-card-actions>
+          </mat-card>
+          <mat-card class="example-card">
+            <mat-card-header>
+              Product Image 5
+            </mat-card-header>
+            <mat-card-actions>
+              <input-file #prdImg5 formControlName="product_image5"
+                (acceptedFile)="onFileAccepted($event, 'product_image5')"
+                (deletedFile)="onFileDeleted($event, 'product_image5')"></input-file>
+            </mat-card-actions>
+          </mat-card>
+          <mat-card class="example-card">
+            <mat-card-header>
+            </mat-card-header>
+            Product Image 6
+            <mat-card-actions>
+              <input-file #prdImg6 formControlName="product_image6"
+                (acceptedFile)="onFileAccepted($event, 'product_image6')"
+                (deletedFile)="onFileDeleted($event, 'product_image6')"></input-file>
+            </mat-card-actions>
+          </mat-card>
+
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Product Slide Show
+            </mat-panel-title>
+            <mat-panel-description>
+              Upload product slide show images.
+              <mat-icon>date_range</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <mat-card class="example-card">
+            <mat-card-header>
+              Show Case 1
+            </mat-card-header>
+            <mat-card-actions>
+              <input-file #prdShowImg1 formControlName="product_showcase1"
+                (acceptedFile)="onFileAccepted($event, 'product_showcase1')"
+                (deletedFile)="onFileDeleted($event, 'product_showcase1')">
+              </input-file>
+            </mat-card-actions>
+          </mat-card>
+          <mat-card class="example-card">
+            <mat-card-header>
+              Show Case 2
+            </mat-card-header>
+            <mat-card-actions>
+              <input-file #prdShowImg2 formControlName="product_showcase2"
+                (acceptedFile)="onFileAccepted($event, 'product_showcase2')"
+                (deletedFile)="onFileDeleted($event, 'product_showcase2')"></input-file>
+            </mat-card-actions>
+          </mat-card>
+          <mat-card class="example-card">
+            <mat-card-header>
+              Show Case 3
+            </mat-card-header>
+            <mat-card-actions>
+              <input-file #prdShowImg3 formControlName="product_showcase3"
+                (acceptedFile)="onFileAccepted($event, 'product_showcase3')"
+                (deletedFile)="onFileDeleted($event, 'product_showcase3')"></input-file>
+            </mat-card-actions>
+          </mat-card>
+
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">End</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <input type="hidden" formControlName="id">
     </mat-card-content>
     <mat-card-actions>
       <button mat-button type="submit" color="Primary">
@@ -98,3 +291,5 @@
     </mat-card-actions>
   </mat-card>
 </form>
+Form Control : {{ pageForm.value | json }} ==> Form Status : {{ pageForm.status }}
+Files: {{ acceptedFiles | json }}

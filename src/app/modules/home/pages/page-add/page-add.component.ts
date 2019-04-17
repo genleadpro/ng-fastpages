@@ -12,8 +12,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription} from 'rxjs';
 import { first } from 'rxjs/operators';
 import { findIndex as _findIndex } from 'lodash';
-
+import * as moment from 'moment';
 import { PageService } from '@app/core/services/page.service';
+import { environment as env } from '@env/environment';
+
 // import { isString } from 'util';
 // import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
 
@@ -50,7 +52,9 @@ export class PageAddComponent implements OnInit, OnDestroy {
     xs: 1
   }
 
+
   acceptedFiles = [];
+
   constructor(
     private mediaObserver: MediaObserver,
     private formBuilder: FormBuilder,
@@ -77,20 +81,6 @@ export class PageAddComponent implements OnInit, OnDestroy {
     return this.pageForm.controls;
   }
 
-  // Done: TEST
-  onFileAccepted(event, key) {
-    let aFile = new acceptedFile(key, event);
-    this.acceptedFiles.push(aFile);
-  }
-
-  // Done: TEST
-  onFileDeleted(event, key) {
-    const index : number = _findIndex(this.acceptedFiles, function(item) {
-      return item.name == key;
-    });
-    if (index !== -1) this.acceptedFiles.splice(index, 1);
-  }
-
   // OnSubmit event
   onSubmit() {
     this.submitted = true;
@@ -99,23 +89,20 @@ export class PageAddComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
+
     let formData = new FormData();
-    let data = this.pageForm.value;
-
-
-    this.acceptedFiles.forEach(obj => {
-      formData.append(obj.name, obj.file.file, obj.file.name);
-    });
 
     formData.append('title', this.pageForm.get('title').value);
     formData.append('slug', this.pageForm.get('slug').value);
     formData.append('status', this.pageForm.get('status').value);
+    formData.append('available_on', this.formatDate(this.pageForm.get('available_on').value));
+    formData.append('available_off', this.formatDate(this.pageForm.get('available_off').value));
+
     this.pageService.addPage(formData)
       .pipe(first())
       .subscribe(
         data => {
-          // console.log('successfull login, then return to ', this.returnUrl);
-          this.router.navigate([this.returnUrl], {relativeTo: this.route});
+          this.router.navigate(['../' + data.id + '/edit'], { relativeTo: this.route });
       },
       error => {
         if (error instanceof HttpErrorResponse && error.status == 400) {
@@ -134,20 +121,14 @@ export class PageAddComponent implements OnInit, OnDestroy {
       title: ['', [Validators.required, Validators.maxLength(200)]],
       slug: ['', [Validators.minLength(5), Validators.maxLength(10)]],
       status: [true, [Validators.required]],
-      available_on: [],
-      available_off: [],
-      product_name: ['', [Validators.required, Validators.maxLength(100)]],
-      product_description: [''],
-      product_price: [],
-      product_discount_price: [],
-      product_discount_until: [],
-      product_image1: [],
-      product_image2: [],
-      product_image3: [],
-      product_image4: [],
-      product_image5: [],
-      product_image6: []
+      available_on: ['', [Validators.required]],
+      available_off: ['', [Validators.required]],
     });
+  }
+
+  formatDate(dateStr: string) : string {
+    let dt = moment(dateStr).format(env.serverDateFormat);
+    return dt;
   }
 
   onCancelClicked() {

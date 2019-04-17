@@ -26,6 +26,16 @@ import { MatPaginatorModule } from '@angular/material';
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { InputFileModule } from 'ngx-input-file';
+import { MatExpansionModule } from '@angular/material/expansion';
+import {
+  MatMomentDateModule,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter
+} from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import * as _moment from 'moment';
+
 
 @NgModule({
   declarations: [],
@@ -56,8 +66,9 @@ import { InputFileModule } from 'ngx-input-file';
     MatPaginatorModule,
     MatGridListModule,
     MaterialFileInputModule,
-    InputFileModule
-
+    InputFileModule,
+    MatExpansionModule,
+    MatMomentDateModule
   ],
   exports: [
     MatButtonModule,
@@ -84,7 +95,15 @@ import { InputFileModule } from 'ngx-input-file';
     MatPaginatorModule,
     MatGridListModule,
     MaterialFileInputModule,
-    InputFileModule
+    InputFileModule,
+    MatExpansionModule,
+    MatMomentDateModule
+  ],
+  providers: [
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true }},
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    // { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   ]
 })
 export class MaterialModule { }

@@ -16,6 +16,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
    * If successfully got new access token, intercept the original request.
    * **/
   intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (!this.authorizationService.isAuthenticated()) return next.handle(req);
     console.log("Intercept request");
     // TODO: Verify this "isWhitelistDomain() bug"
     if (/* this.jwtInterceptor.isWhitelistedDomain(req) && */!this.jwtInterceptor.isBlacklistedRoute(req)) {
