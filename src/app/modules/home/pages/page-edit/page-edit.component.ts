@@ -4,7 +4,7 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { first } from 'rxjs/operators';
 import { PageService } from '@app/core/services/page.service';
-import { PageModel } from '@app/core';
+import { PageModel, IVariantOption } from '@app/core';
 import { findIndex as _findIndex, omit as _omit } from 'lodash';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { CustomValidators } from '@app/shared/validators/custom-validators';
@@ -92,22 +92,13 @@ export class PageEditComponent implements OnInit {
       .subscribe(data => {
         this.pageModel = data;
 
-        let product_variant_options = data['product_variant_options'];
-        // update tenant aware path and removed readonly properties using lodash omit111111111
+        let variantOptions = data.product_variant_options;
+        // update tenant aware path and removed readonly properties using lodash omit
         data = _omit(this.correctMediaPath(data), [
           'hit_count', 'created_at', 'updated_at', 'owner', 'updated_by', 'product_variant_options']);
         this.pageForm.patchValue(data);
-        
-        product_variant_options.forEach(function(item){
-          this.productVariantOptionList.push(
-            this.formBuilder.group({
-              id: [item.id, []],
-              varinat_name: [item.variant_name, Validators.compose([Validators.required])],
-              variant_value: [item.variant_value, Validators.compose([Validators.required])],
-              image: ['', []],
-            })
-          );    
-        })
+        this.pageForm.setControl('product_variant_options', this.setExistingVariantOptions(variantOptions));
+        this.productVariantOptionList = this.pageForm.get('product_variant_options') as FormArray;
       });
   }
 
@@ -162,12 +153,12 @@ export class PageEditComponent implements OnInit {
       available_on: [],
       available_off: [],
       product_name: ['', [Validators.required, Validators.maxLength(100)]],
-      product_description: [''],
+      product_description: [],
       product_details: [],
       product_price: [],
       product_discount_price: [],
       product_discount_until: [],
-      product_variant_options: [],
+      product_variant_options: this.formBuilder.array([this.createVariantOptionFormGroup()]),
       product_image1: [],
       product_image2: [],
       product_image3: [],
@@ -218,19 +209,31 @@ export class PageEditComponent implements OnInit {
     if (index !== -1) this.acceptedFiles.splice(index, 1);
   }
 
-  createProductVariantOption(): FormGroup {
+  setExistingVariantOptions(vOptions: IVariantOption[]): FormArray {
+    const formArray = new FormArray([]);
+    vOptions.forEach(option => {
+      formArray.push(
+        this.formBuilder.group({
+          id : option.id,
+          variant_name: option.variant_name,
+          variant_value: option.variant_value
+        })
+      )
+    });
+
+    return formArray;
+  }
+
+  createVariantOptionFormGroup(): FormGroup {
     return this.formBuilder.group({
       id: [],
-      varinat_name: ['', Validators.compose([Validators.required])],
+      variant_name: ['', Validators.compose([Validators.required])],
       variant_value: ['', Validators.compose([Validators.required])],
-      image: ['', []],
     });
   }
 
-
   addProductVariantOption() {
-
-    this.productVariantOptionList.push(this.createProductVariantOption());
+    this.productVariantOptionList.push(this.createVariantOptionFormGroup());
   }
 
   removeProductVariantOption(index) {

@@ -102,39 +102,34 @@
               <mat-icon>date_range</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <div class="example-contain" formArrayName="product_variant_options">
+          <div class="example-container-">
             <button type="button" (click)="addProductVariantOption()">Add</button>
             <p></p>
-            <div class="" *ngFor="let variant_option of productVariantOptionFormGroup.controls; let i = index;">
+            <div class="debug-" formArrayName="product_variant_options" *ngFor="let variantOption of productVariantOptionFormGroup.controls; let i = index;">
                 <div [formGroupName]="i" class="row">
                     <mat-card class="example-card">
                       <mat-card-header>
 
                       </mat-card-header>
                       <mat-card-content>
-                        <div class="form-group">
+                        <div class="form-group-">
                           <input type="hidden" formControlName="id">
                           <mat-form-field>
                             <mat-label>Name</mat-label>
-                            <input matInput class="form-control" formControlName="variant_name">
-                          </mat-form-field>
-                          <mat-error
-                            *ngIf="getProductVariantOptionFormGroup(i).controls['variant_name'].touched && getProductVariantOptionFormGroup(i).controls['variant_name'].hasError('required')">
+                            <input matInput class="form-control-" formControlName="variant_name" id="{{'variant_name-' + i}}">
+                            <mat-error *ngIf="variantOption.get('variant_name').touched && variantOption.get('variant_name').hasError('required')">
                             Name is required! </mat-error>
+                          </mat-form-field>
+
                         </div>
-                        <div class="form-group">
+                        <div class="form-group-">
                           <mat-form-field>
                             <mat-label>Value</mat-label>
-                            <input matInput class="form-control" formControlName="variant_value" type="text">
-                          </mat-form-field>
-                          <mat-error
-                            *ngIf="getProductVariantOptionFormGroup(i).controls['varinat_value'].touched && getProductVariantOptionFormGroup(i).controls['variant_value'].hasError('required')">
+                            <input matInput class="form-control-" formControlName="variant_value" type="text" id="{{'variant_value-' + i}}">
+                            <mat-error *ngIf="variantOption.get('variant_value').touched && variantOption.get('variant_value').hasError('required')">
                             Value is required! </mat-error>
-                        </div>
-                        <div class="form-group">
-                            <mat-label>Image</mat-label>
-                            <input-file formControlName="image">
-                          </input-file>
+                          </mat-form-field>
+
                         </div>
                       </mat-card-content>
                       <mat-card-actions>
