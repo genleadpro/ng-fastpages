@@ -5,6 +5,12 @@ export interface InputFile {
   preview?: string | ArrayBuffer;
 }
 
+export interface IVariantOption {
+  id: any;
+  variant_name: string;
+  variant_value: string;
+}
+
 export class PageModel {
   id: number;
   title: string;
@@ -32,6 +38,7 @@ export class PageModel {
   product_showcase2: string | InputFile; // image showcase
   product_showcase3: string | InputFile; // image showcase
   product_showcase4: string | InputFile; // video showcase
+  product_variant_options : IVariantOption[];
 
   selected: boolean = false; // Hold selected state
 }
