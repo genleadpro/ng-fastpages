@@ -16,7 +16,7 @@ import { RefreshTokenInterceptor } from '@app/core/interceptors/refresh-token.in
 import { AuthorizationService } from '@app/core/services/authorization.service';
 import { environment } from '@env/environment';
 
-function jwtOptionsFactory (authorizationService: AuthorizationService) {
+export function jwtOptionsFactory (authorizationService: AuthorizationService) {
   return {
     tokenGetter: () => {
       return authorizationService.getAccessToken();

@@ -10,6 +10,8 @@ import { PageModel } from '@app/core';
 export class PageItemComponent implements OnInit {
   @Input() page: PageModel;
 
+  flipped: boolean;
+
   constructor() { }
 
   ngOnInit() {}

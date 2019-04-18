@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router'
 import {
     MatButtonModule,
     MatIconModule,
@@ -16,7 +17,7 @@ import { FooterComponent } from './../footer/footer.component';
 
 @NgModule({
   imports: [
-      CommonModule,
+    CommonModule,
       MatToolbarModule,
       MatButtonModule,
       MatSidenavModule,
@@ -24,13 +25,14 @@ import { FooterComponent } from './../footer/footer.component';
       MatInputModule,
       MatMenuModule,
       MatListModule,
-      //TranslateModule
+      //TranslateModule,
+      RouterModule
   ],
   declarations: [
-    ContentLayoutComponent,
-    TopnavComponent,
-    SidebarComponent,
-    FooterComponent
+    //ContentLayoutComponent,
+    //TopnavComponent,
+    //SidebarComponent,
+    //FooterComponent
   ]
 })
 export class ContentLayoutModule {}

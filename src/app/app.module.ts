@@ -15,7 +15,6 @@ import { TopnavComponent } from './layouts/topnav/topnav.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { OrderComponent } from './modules/order/order/order.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +24,6 @@ import { OrderComponent } from './modules/order/order/order.component';
     SidebarComponent,
     FooterComponent,
     AuthLayoutComponent,
-    OrderComponent
   ],
   imports: [
     // Angular
