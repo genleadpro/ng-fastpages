@@ -1,0 +1,31 @@
+<div class="content">
+  <mat-toolbar>
+    <div class="ëxample-header">Edit Profile : <span *ngIf="me">{{ me.email }}</span></div>
+  </mat-toolbar>
+    <form fxFlex [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="mb-20" fxFlex fxlayout="row" fxlayout.lt-md="column" fxLayoutGap="20px">
+        <div fxFlexFill>
+          <mat-form-field class="w-100">
+            <input matInput type="text" formControlName="first_name" placeholder="First Name">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mb-20" fxFlex fxlayout="row" fxlayout.lt-md="column" fxLayoutGap="20px">
+        <div fxFlexFill>
+          <mat-form-field class="w-100">
+            <input matInput type="password" formControlName="last_name" placeholder="Last Name">
+          </mat-form-field>
+        </div>
+      </div>
+      <input type="hidden" formControlName="email">
+      <input type="hidden" formControlName="id">
+      <button mat-button type="submit" color="Primary">
+        <mat-icon class="nav-icon">save</mat-icon>
+        Save
+      </button>
+      <button mat-button type="button" (click)="onCancelClicked()">
+        <mat-icon class="nav-icon">cancel</mat-icon>
+        Cancel
+      </button>
+    </form>
+  </div>

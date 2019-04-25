@@ -4,10 +4,13 @@
       <mat-icon class="sidenav-icon">dashboard</mat-icon> {{ 'Dashboard' }}
     </a>
     <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/orders']">
-      <mat-icon class="sidenav-icon">input</mat-icon> {{ 'Orders' }}
+      <mat-icon class="sidenav-icon">monetization_on</mat-icon> {{ 'Orders' }}
     </a>
     <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/settings']">
-      <mat-icon class="sidenav-icon">input</mat-icon> {{ 'Settings' }}
+      <mat-icon class="sidenav-icon">settings</mat-icon> {{ 'Settings' }}
+    </a>
+    <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/profile']">
+      <mat-icon class="sidenav-icon">perm_identity</mat-icon> {{ 'Profile' }}
     </a>
     <div class="nested-menu">
       <a mat-list-item (click)="addExpandClass('pages')">

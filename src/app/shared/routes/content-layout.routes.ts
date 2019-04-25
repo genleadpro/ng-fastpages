@@ -14,6 +14,10 @@ export const CONTENT_ROUTES: Routes = [
     loadChildren: './modules/setting/setting.module#SettingModule'
   },
   {
+    path: 'profile',
+    loadChildren: './modules/profile/profile.module#ProfileModule'
+  },
+  {
     path: 'about',
     loadChildren: './modules/about/about.module#AboutModule'
   },

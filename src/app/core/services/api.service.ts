@@ -55,6 +55,12 @@ export class ApiService {
       .pipe(catchError(this.formatErrors));
   }
 
+  public patch(path: string, body: object = {}): Observable<any> {
+    return this.httpClient
+      .patch(this.resovleBaseUrl(path) + path, JSON.stringify(body), this.options)
+      .pipe(catchError(this.formatErrors));
+  }
+
   public delete(path: string): Observable<any> {
     return this.httpClient.delete(this.resovleBaseUrl(path) + path).pipe(catchError(this.formatErrors));
   }

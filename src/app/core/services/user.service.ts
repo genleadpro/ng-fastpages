@@ -9,7 +9,9 @@ import { Observable } from 'rxjs';
 
 const routes = {
     users: '/users/',
-    me: '/users/me/'
+    me: '/users/me/',
+    updateProfile: (id: number) => `/users/${id}/`,
+    changePassword: '/users/set_password/'
 };
 
 @Injectable({
@@ -27,7 +29,7 @@ export class UserService implements OnInit {
 
 
   me() : Observable<any> {
-      return this.apiService.get(routes['me']);
+      return this.apiService.get(routes.me);
   }
 
   getAll() {
@@ -36,5 +38,13 @@ export class UserService implements OnInit {
 
   getById(id: number) {
 
+  }
+
+  changePassword(oldPassword: string, newPassword: string) {
+    return this.apiService.put(routes.changePassword, { old_password: oldPassword, new_password: newPassword})
+  }
+
+  updateProfile(id, data) {
+    return this.apiService.patch(routes.updateProfile(id), data);
   }
 }

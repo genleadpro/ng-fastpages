@@ -26,7 +26,7 @@ export class acceptedFile {
   styleUrls: ['./page-edit.component.scss']
 })
 export class PageEditComponent implements OnInit {
-
+  devMode: boolean = !env.production;
   id: number;
   step = 0;
   pageForm: FormGroup;
@@ -111,8 +111,11 @@ export class PageEditComponent implements OnInit {
     }
     this.isLoading = true;
     let formData = new FormData();
-    let data = this.pageForm.controls;
+    let data = this.pageForm.getRawValue(); //.controls;
+    console.log('Raw form values', data);
+    let fd = this.convertModelToFormData(data);
 
+    /*
     this.acceptedFiles.forEach(obj => {
       formData.append(obj.name, obj.file.file, obj.file.name);
     });
@@ -126,8 +129,8 @@ export class PageEditComponent implements OnInit {
         formData.append(key, this.pageForm.get(key).value);
       }
     });
-
-    this.pageService.updatePage(this.id, formData)
+    */
+    this.pageService.updatePage(this.id, fd /*formData*/)
       .pipe(first())
       .subscribe(
         data=> {
@@ -148,7 +151,7 @@ export class PageEditComponent implements OnInit {
     this.pageForm = this.formBuilder.group({
       id: [],
       title: ['', [Validators.required, Validators.maxLength(200)]],
-      slug: ['', [Validators.minLength(5), Validators.maxLength(10), CustomValidators.slugValidate]],
+      slug: ['', [Validators.minLength(5), Validators.maxLength(30), CustomValidators.slugValidate]],
       status: [true, [Validators.required]],
       available_on: [],
       available_off: [],
@@ -266,11 +269,13 @@ export class PageEditComponent implements OnInit {
   }
 
   correctMediaPath(data) {
+    let tenantDomain = localStorage.getItem('tenant_url');
+
     Object.keys(data).forEach ((key) => {
       if (this.mediaInputs.indexOf(key) !== -1 ) {
         if (typeof data[key] == 'string') {
           let path: string = data[key];
-          path = path.replace('/media/uploads/', '/media/'+ 'edutech.fastpages.code'+'/uploads/');
+          path = path.replace('/media/uploads/', '/media/'+ tenantDomain +'/uploads/');
           let image = [{preview: path}];
           data[key] = image;
         }else {
@@ -280,5 +285,42 @@ export class PageEditComponent implements OnInit {
 
     });
     return data;
+  }
+
+  convertModelToFormData(model: any, form: FormData = null, namespace = ''): FormData {
+    let formData = form || new FormData();
+    let formKey;
+
+    for (let propertyName in model) {
+        if (!model.hasOwnProperty(propertyName) || !model[propertyName]) continue;
+        let formKey = namespace ? `${namespace}[${propertyName}]` : propertyName;
+        if (model[propertyName] instanceof Date)
+          formData.append(formKey, model[propertyName].toISOString());
+        else if (model[propertyName] instanceof moment) {
+          console.log('Found moment object');
+          formData.append(formKey, model[propertyName].toISOString());
+        }
+        else if (model[propertyName] instanceof File)
+          formData.append(formKey, model[propertyName].file, model[propertyName].name);
+        else if (model[propertyName] instanceof Array) {
+          // work around for File Input stored as array (of file and preview image) even if only one file usage
+          if (this.mediaInputs.includes(propertyName)) {
+            if (model[propertyName].length > 0  && model[propertyName][0].file instanceof File)
+              formData.append(formKey, model[propertyName][0].file, model[propertyName][0].name);
+            else
+              continue;
+          }
+          else
+            model[propertyName].forEach((element, index) => {
+              const tempFormKey = `${formKey}[${index}]`;
+              this.convertModelToFormData(element, formData, tempFormKey);
+            });
+        }
+        else if (typeof model[propertyName] === 'object' && !(model[propertyName] instanceof File))
+          this.convertModelToFormData(model[propertyName], formData, formKey);
+        else
+          formData.append(formKey, model[propertyName].toString());
+    }
+    return formData;
   }
 }

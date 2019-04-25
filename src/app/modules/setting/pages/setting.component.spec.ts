@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { SettingComponent } from './setting.component';
+import { SettingComponent } from './setting/setting.component';
 
 describe('ContactComponent', () => {
   let component: SettingComponent;

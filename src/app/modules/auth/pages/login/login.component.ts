@@ -70,6 +70,9 @@ export class LoginComponent implements OnInit {
             this.error = allErrors[0];
           }
         }
+        if (error instanceof HttpErrorResponse && error.status == 401) {
+          this.error = error.error['detail'];
+        }
         if (error instanceof HttpErrorResponse && error.status == 0) {
           this.error = 'Unknown error, server may be down.';
         }

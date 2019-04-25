@@ -1,0 +1,27 @@
+<div>
+  <mat-toolbar>
+      <div class="example-header">
+        My Profile
+      </div>
+      <span class="fill-remaining-space"></span>
+      <div class="ml-10"><button mat-raised-button (click)="onEditClicked()">Edit</button></div>
+      <div class="ml-10"><button mat-raised-button (click)="onChangePasswordClicked()">Change Password</button></div>
+  </mat-toolbar>
+  <mat-card *ngIf="me">
+    <mat-card-header>
+      <mat-card-title>
+        E-mail: {{ me.email }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="mb-50" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+            <div class="mt-20 mb-20 ml-10" fxFlex>
+                First Name: {{ me.first_name }}
+            </div>
+            <div class="mt-20 mb-20 ml-10" fxFlex>
+                Last Name: {{ me.last_name }}
+            </div>
+        </div>
+    </mat-card-content>
+  </mat-card>
+</div>

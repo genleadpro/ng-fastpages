@@ -50,3 +50,25 @@
 .w-100 {
   width: 100%;
 }
+
+.alert-info, .alert-success, .alert-warning, .alert-error {
+  margin: 10px 0px;
+  padding:12px;
+  border-radius:.5em;
+}
+.alert-info {
+  color: #00529B;
+  background-color: #BDE5F8;
+}
+.alert-success {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+}
+.alert-warning {
+  color: #9F6000;
+  background-color: #FEEFB3;
+}
+.alert-error {
+  color: #D8000C;
+  background-color: #FFD2D2;
+}

@@ -45,4 +45,12 @@ export class TopnavComponent implements OnInit {
         this.translate.use(language);
     }
 
+    onProfileMenuClicked() {
+      this.router.navigate(['/profile']);
+    }
+
+    onSettingMenuClicked() {
+      this.router.navigate(['/settings']);
+    }
+
 }

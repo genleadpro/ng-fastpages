@@ -26,12 +26,16 @@ const routes: Routes = [
     loadChildren: './modules/auth/auth.module#AuthModule'
   },
   // Fallback when no prior routes is matched
-  { path: '**', redirectTo: '/auth/login', pathMatch: 'full' }
+  /*
+  {
+    path: '**',
+    redirectTo: '/auth/login',
+    pathMatch: 'full'
+  }*/
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
-  providers: []
 })
 export class AppRoutingModule { }
