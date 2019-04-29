@@ -21,8 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSliderModule } from '@angular/material/';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
-import { MatTableModule } from '@angular/material';
-import { MatPaginatorModule } from '@angular/material';
+import { MatTableModule, MatSortModule, MatPaginatorModule } from '@angular/material';
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { InputFileModule } from 'ngx-input-file';
@@ -63,6 +62,7 @@ import * as _moment from 'moment';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     MatGridListModule,
     MaterialFileInputModule,
@@ -92,12 +92,14 @@ import * as _moment from 'moment';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     MatGridListModule,
     MaterialFileInputModule,
     InputFileModule,
     MatExpansionModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true }},

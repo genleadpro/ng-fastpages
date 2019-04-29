@@ -8,15 +8,15 @@
       <div class="example-container">
         <mat-form-field>
           <input matInput formControlName="title" placeholder="Title" required>
+          <mat-error *ngIf="pageForm.controls['title'].errors?.required">Title is required</mat-error>
         </mat-form-field>
-        <app-control-messages [control]="f.title"></app-control-messages>
         <mat-form-field>
-          <input matInput formControlName="slug" placeholder="Slug">
+          <input matInput formControlName="slug" placeholder="Slug" readonly="true">
         </mat-form-field>
 
         <label>Status</label>
-        <mat-slide-toggle #status formControlName="status" [checked]="f.status.value"
-          (click)="status.value =!status.value" color="primary">{{ f.status.value ? 'Active' : 'Not Active'}}
+        <mat-slide-toggle #status formControlName="status" [checked]="pageForm.controls['status'].value"
+          (click)="status.value =!status.value" color="primary">{{ pageForm.controls['status'].value ? 'Active' : 'Not Active'}}
         </mat-slide-toggle>
         <p></p>
         <mat-divider></mat-divider>

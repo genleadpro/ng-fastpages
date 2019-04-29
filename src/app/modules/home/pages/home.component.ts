@@ -13,11 +13,12 @@ import { delay } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
   pages: PageModel[];
+  isLoading: boolean;
   dataSource: MatTableDataSource<PageModel>; //new PageDataSource(this.pageService);
   @ViewChild(MatPaginator)  paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns = ['select', 'name', 'slug', 'status', 'actions'];
+  displayedColumns = ['select', 'index', 'name', 'status', 'available_on','available_off', 'id', 'actions'];
 
 
   constructor(
@@ -36,7 +37,6 @@ export class HomeComponent implements OnInit {
    * be able to query its view for the initialized paginator and sort.
    */
   ngAfterViewInit() {
-
   }
 
   applyFilter(filterValue: string) {
@@ -46,13 +46,18 @@ export class HomeComponent implements OnInit {
   }
 
   loadPages() {
-    this.pageService.getAll().subscribe(data => {
-      this.dataSource =  new MatTableDataSource();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.dataSource.data = data;
-      this.pages = data;
-    });
+    this.isLoading = true;
+    this.pageService.getAll().subscribe(
+      data => {
+        this.dataSource =  new MatTableDataSource();
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.data = data;
+        this.dataSource.sort = this.sort;
+        this.pages = data;
+        this.isLoading = false;
+    },
+    error => { this.isLoading = false}
+    );
   }
 
   onAddClicked() {

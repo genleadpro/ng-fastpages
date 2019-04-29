@@ -93,7 +93,11 @@ export class PageAddComponent implements OnInit, OnDestroy {
     let formData = new FormData();
 
     formData.append('title', this.pageForm.get('title').value);
-    formData.append('slug', this.pageForm.get('slug').value);
+    let slug = this.pageForm.get('slug').value.trim();
+
+    if (slug) {
+      formData.append('slug', slug);
+    }
     formData.append('status', this.pageForm.get('status').value);
     formData.append('available_on', this.formatDate(this.pageForm.get('available_on').value));
     formData.append('available_off', this.formatDate(this.pageForm.get('available_off').value));
@@ -119,7 +123,7 @@ export class PageAddComponent implements OnInit, OnDestroy {
     this.pageForm = this.formBuilder.group({
       id: [],
       title: ['', [Validators.required, Validators.maxLength(200)]],
-      slug: ['', [Validators.minLength(5), Validators.maxLength(10)]],
+      slug: '',
       status: [true, [Validators.required]],
       available_on: ['', [Validators.required]],
       available_off: ['', [Validators.required]],

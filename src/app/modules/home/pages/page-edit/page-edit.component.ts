@@ -151,7 +151,7 @@ export class PageEditComponent implements OnInit {
     this.pageForm = this.formBuilder.group({
       id: [],
       title: ['', [Validators.required, Validators.maxLength(200)]],
-      slug: ['', [Validators.minLength(5), Validators.maxLength(30), CustomValidators.slugValidate]],
+      slug: [{value:'', disabled:true}],
       status: [true, [Validators.required]],
       available_on: [],
       available_off: [],
@@ -294,6 +294,7 @@ export class PageEditComponent implements OnInit {
     for (let propertyName in model) {
         if (!model.hasOwnProperty(propertyName) || !model[propertyName]) continue;
         let formKey = namespace ? `${namespace}[${propertyName}]` : propertyName;
+        //let formKey = namespace ? `[${namespace}${propertyName}]` : propertyName;
         if (model[propertyName] instanceof Date)
           formData.append(formKey, model[propertyName].toISOString());
         else if (model[propertyName] instanceof moment) {
@@ -312,8 +313,14 @@ export class PageEditComponent implements OnInit {
           }
           else
             model[propertyName].forEach((element, index) => {
-              const tempFormKey = `${formKey}[${index}]`;
-              this.convertModelToFormData(element, formData, tempFormKey);
+              if (typeof element !== 'object') {
+                formData.append(`${formKey}[]`, element.toString())
+              }
+              else{
+                // `${formKey}[$index]`
+                const tempFormKey = `${formKey}[${index}]`;
+                this.convertModelToFormData(element, formData, tempFormKey);
+              }
             });
         }
         else if (typeof model[propertyName] === 'object' && !(model[propertyName] instanceof File))

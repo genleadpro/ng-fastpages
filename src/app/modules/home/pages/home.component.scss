@@ -1,13 +1,15 @@
-.masonry-item {
-  width: 350px;
-  margin-bottom: 1rem;
-  margin-right: 1rem;
-}
-
 .example-icon {
   padding: 0 14px;
 }
 
 .example-spacer {
   flex: 1 1 auto;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.mat-column-index {
+  width: 20px;
 }

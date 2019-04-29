@@ -16,10 +16,10 @@ export class CustomValidators {
      };
   }
 
-  // Validates passwords
+  // Validates passwords, add it on FormGroup
   static passwordMatch(group): any {
-     const password = group.controls.password;
-     const confirm = group.controls.confirm;
+     const password = group.controls.new_password;
+     const confirm = group.controls.confirm_new_password;
      if (password.pristine || confirm.pristine) {
         return null;
      }
@@ -28,7 +28,7 @@ export class CustomValidators {
         return null;
      }
      return {
-        invalidPassword: true
+        passwordNotMatch: true
      };
   }
 

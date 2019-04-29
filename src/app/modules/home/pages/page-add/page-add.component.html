@@ -3,12 +3,12 @@
         <mat-grid-tile>
           <mat-form-field>
             <input matInput formControlName="title" placeholder="Title" required/>
-            <app-control-messages [control]="f.title"></app-control-messages>
+            <mat-error *ngIf="pageForm.controls['title'].errors?.required">You must enter the title</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
-            <input matInput formControlName="slug" placeholder="Slug" />
+            <input matInput formControlName="slug" placeholder="Slug (Auto generated on save)" readonly="true"/>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>

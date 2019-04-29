@@ -10,29 +10,29 @@
           <span class="fill-remaining-space"></span>
       </mat-toolbar-row>
     </mat-toolbar>
-    <mat-table [dataSource]="dataSource">
+    <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="select">
           <mat-header-cell *matHeaderCellDef><mat-checkbox (change)="selectAll()"></mat-checkbox></mat-header-cell>
           <mat-cell *matCellDef="let row"><mat-checkbox [checked]="row.selected"></mat-checkbox></mat-cell>
         </ng-container>
         <ng-container matColumnDef="full_name">
-          <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Full Name </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ row.full_name }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="order_date">
-            <mat-header-cell *matHeaderCellDef> Order Date </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Order Date </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{ row.order_date }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="order_amount">
-            <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{ row.order_amount }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="district">
-            <mat-header-cell *matHeaderCellDef> District </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> District </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{ row.district }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="province">
-            <mat-header-cell *matHeaderCellDef> Province </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Province </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{ row.province }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">
@@ -45,4 +45,8 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
     <mat-paginator [pageSizeOptions]="[10, 20, 30, 50]" showFirstLastButtons></mat-paginator>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+      <mat-progress-spinner color="primary" mode="indeterminate">
+      </mat-progress-spinner>
+    </mat-card>
   </div>

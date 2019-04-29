@@ -10,7 +10,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 import { AngularEditorModule, AngularEditorConfig } from '@kolkov/angular-editor';
 
-
 import {
   faAsterisk,
   faBars,
@@ -68,6 +67,7 @@ library.add(
 
 import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { EqualValidatorDirective } from './directives';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 const config: InputFileConfig = {};
@@ -107,11 +107,12 @@ const editorConfig: AngularEditorConfig = {
       //NgbModule.forRoot(),
       InputFileModule.forRoot(config),
       FontAwesomeModule,
-      AngularEditorModule,
+      AngularEditorModule
     ],
     declarations: [
       ControlMessagesComponent,
-      SpinnerComponent
+      SpinnerComponent,
+      EqualValidatorDirective
     ],
     exports: [
       CommonModule,
@@ -124,7 +125,7 @@ const editorConfig: AngularEditorConfig = {
       FontAwesomeModule,
       ControlMessagesComponent,
       SpinnerComponent,
-      AngularEditorModule
+      AngularEditorModule,
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
